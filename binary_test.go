@@ -214,6 +214,9 @@ func TestBinaryChunkSets(t *testing.T) {
 				if final := h.Flags&0b1 != 0; final != (int(h.ChunkIndex) == len(set.Chunks)-1) {
 					t.Errorf("%s: final_chunk flag must be set on the last chunk only", name)
 				}
+				if int(h.ChunkIndex) >= len(parts) || parts[h.ChunkIndex] != nil {
+					t.Fatalf("%s: chunk_index %d out of range or duplicated", name, h.ChunkIndex)
+				}
 				parts[h.ChunkIndex] = payload
 			}
 			if slices.ContainsFunc(parts, func(b []byte) bool { return b == nil }) {

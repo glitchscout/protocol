@@ -4,8 +4,8 @@
   "header": {
     "magic": "GSBF",
     "header_version": 1,
-    "frame_type": 3,
-    "encoding": 3,
+    "frame_type": 1,
+    "encoding": 1,
     "flags": 0,
     "header_length": 64,
     "payload_length": 0,
