@@ -36,3 +36,21 @@ jobs:
           go-version-file: go.mod
       - run: git worktree add "$RUNNER_TEMP/base" "origin/${{ github.base_ref }}"
       - run: go run ./cmd/compatcheck -base "$RUNNER_TEMP/base" -head .
+
+  ksy:
+    # The Kaitai Struct definition of the binary frame must compile.
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      KSC_VERSION: "0.11"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+      - name: Install kaitai-struct-compiler
+        run: |
+          curl -sSfL -o "$RUNNER_TEMP/ksc.deb" "https://github.com/kaitai-io/kaitai_struct_compiler/releases/download/${KSC_VERSION}/kaitai-struct-compiler_${KSC_VERSION}_all.deb"
+          sudo apt-get install -y "$RUNNER_TEMP/ksc.deb"
+      - run: kaitai-struct-compiler -t python --outdir "$RUNNER_TEMP/ksc" binary-frame-v1.ksy

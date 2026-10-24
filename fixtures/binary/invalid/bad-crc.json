@@ -1,0 +1,5 @@
+{
+  "description": "payload_crc32 doesn't match the payload.",
+  "valid": false,
+  "reason": "bad_crc"
+}

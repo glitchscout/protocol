@@ -1,0 +1,5 @@
+{
+  "description": "Message cut short inside the payload.",
+  "valid": false,
+  "reason": "length_mismatch"
+}

@@ -39,6 +39,12 @@ strict: unknown fields are rejected.
 that would still exceed the cap is truncated by distance and flagged `truncated: true`. Binary frames
 are capped at 4 MB (`max_binary_frame_bytes`).
 
+## Binary frames
+
+Screenshots and live-view frames are WebSocket binary messages: a 64-byte little-endian header plus
+the payload. See [binary-frame-v1.md](binary-frame-v1.md) and the Kaitai Struct definition
+[binary-frame-v1.ksy](binary-frame-v1.ksy). Golden frames are in `fixtures/binary/`.
+
 ## Fixtures
 
 `fixtures/valid/<MESSAGE_TYPE>/*.json` are golden messages every implementation must accept;

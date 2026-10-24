@@ -1,0 +1,23 @@
+{
+  "description": "Zero-length payload (CRC-32 of no bytes is 0).",
+  "valid": true,
+  "header": {
+    "magic": "GSBF",
+    "header_version": 1,
+    "frame_type": 1,
+    "encoding": 1,
+    "flags": 0,
+    "header_length": 64,
+    "payload_length": 0,
+    "tick_frame": 14052,
+    "request_id": "3f2a1c9e-8b7d-4e6f-9a0b-1c2d3e4f5a6b",
+    "width": 0,
+    "height": 0,
+    "source_width": 0,
+    "source_height": 0,
+    "chunk_index": 0,
+    "chunk_count": 1,
+    "payload_crc32": 0
+  },
+  "payload_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}
