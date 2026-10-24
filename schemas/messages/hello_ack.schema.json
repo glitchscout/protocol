@@ -36,6 +36,10 @@
         "resumed"
       ],
       "additionalProperties": false
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
     }
   }
 }

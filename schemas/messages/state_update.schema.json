@@ -55,7 +55,21 @@
       "required": [
         "mode"
       ],
-      "unevaluatedProperties": false
+      "unevaluatedProperties": false,
+      "if": {
+        "properties": {
+          "mode": {
+            "const": "full"
+          }
+        }
+      },
+      "then": {
+        "not": {
+          "required": [
+            "removed"
+          ]
+        }
+      }
     }
   }
 }

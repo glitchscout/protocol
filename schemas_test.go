@@ -3,6 +3,8 @@ package protocol
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
+	"fmt"
 	"io/fs"
 	"path"
 	"slices"
@@ -173,40 +175,112 @@ func TestValidFixtures(t *testing.T) {
 	}
 }
 
+// expectations maps fixtures/invalid/<dir>/<name>.json (relative to fixtures/invalid) to the JSON
+// Pointer of the instance location the fixture must be rejected at.
+func expectations(t *testing.T) map[string]string {
+	t.Helper()
+	b, err := FS.ReadFile("fixtures/invalid/expectations.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	var doc struct {
+		Fixtures map[string]string `json:"fixtures"`
+	}
+	if err := json.Unmarshal(b, &doc); err != nil {
+		t.Fatal(err)
+	}
+	return doc.Fixtures
+}
+
+// leafLocations returns the instance locations, as JSON Pointers, of the innermost validation errors.
+func leafLocations(err error) []string {
+	var ve *jsonschema.ValidationError
+	if !errors.As(err, &ve) {
+		return nil
+	}
+	var out []string
+	var walk func(*jsonschema.ValidationError)
+	walk = func(e *jsonschema.ValidationError) {
+		if len(e.Causes) == 0 {
+			out = append(out, "/"+strings.Join(e.InstanceLocation, "/"))
+			if len(e.InstanceLocation) == 0 {
+				out[len(out)-1] = ""
+			}
+			return
+		}
+		for _, c := range e.Causes {
+			walk(c)
+		}
+	}
+	walk(ve)
+	return out
+}
+
 func TestInvalidFixtures(t *testing.T) {
 	c := newCompiler(t)
 	dispatch := compile(t, c, "schemas/message.schema.json")
+	want := expectations(t)
 	dirs := append([]string{"envelope"}, messageTypes...)
+	seen := map[string]bool{}
 	for _, dir := range dirs {
 		for _, f := range fixtureFiles(t, "invalid", dir) {
+			rel := strings.TrimPrefix(f, "fixtures/invalid/")
+			seen[rel] = true
 			t.Run(f, func(t *testing.T) {
 				doc := readJSON(t, f)
+				ptr, ok := want[rel]
+				if !ok {
+					t.Fatalf("no entry for %s in fixtures/invalid/expectations.json", rel)
+				}
+				sch := dispatch
 				if dir != "envelope" {
-					if err := compile(t, c, messageSchemaPath(dir)).Validate(doc); err == nil {
-						t.Errorf("accepted by %s, want rejection", messageSchemaPath(dir))
-					}
+					sch = compile(t, c, messageSchemaPath(dir))
+				}
+				err := sch.Validate(doc)
+				if err == nil {
+					t.Fatal("accepted, want rejection")
+				}
+				if locs := leafLocations(err); !slices.Contains(locs, ptr) {
+					t.Errorf("rejected at %q, want a failure at %q:\n%v", locs, ptr, err)
 				}
 				if err := dispatch.Validate(doc); err == nil {
-					t.Errorf("accepted by message.schema.json, want rejection")
+					t.Error("accepted by message.schema.json, want rejection")
 				}
 			})
+		}
+	}
+	for rel := range want {
+		if !seen[rel] {
+			t.Errorf("expectations.json lists %s, which isn't an invalid fixture", rel)
 		}
 	}
 }
 
 func TestFixturesFitTextFrameCap(t *testing.T) {
 	const maxTextFrame = 256 * 1024
-	for _, kind := range []string{"valid", "invalid"} {
-		_ = fs.WalkDir(FS, path.Join("fixtures", kind), func(p string, d fs.DirEntry, err error) error {
-			if err != nil || d.IsDir() {
-				return err
-			}
-			b, _ := FS.ReadFile(p)
-			var compact bytes.Buffer
-			if json.Compact(&compact, b) == nil && compact.Len() > maxTextFrame {
-				t.Errorf("%s is %d bytes compacted, over the %d-byte text-frame cap", p, compact.Len(), maxTextFrame)
-			}
-			return nil
-		})
+	checked := 0
+	err := fs.WalkDir(FS, "fixtures", func(p string, d fs.DirEntry, err error) error {
+		if err != nil || d.IsDir() || !strings.HasSuffix(p, ".json") {
+			return err
+		}
+		b, err := FS.ReadFile(p)
+		if err != nil {
+			return err
+		}
+		var compact bytes.Buffer
+		if err := json.Compact(&compact, b); err != nil {
+			return fmt.Errorf("%s: %w", p, err)
+		}
+		if compact.Len() > maxTextFrame {
+			t.Errorf("%s is %d bytes compacted, over the %d-byte text-frame cap", p, compact.Len(), maxTextFrame)
+		}
+		checked++
+		return nil
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	if checked == 0 {
+		t.Fatal("no fixtures checked")
 	}
 }
