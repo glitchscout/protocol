@@ -51,21 +51,15 @@ func readJSON(t *testing.T, p string) any {
 	return doc
 }
 
-// schemaURL maps schemas/messages/step.schema.json to its $id.
-func schemaURL(p string) string { return SchemaBaseURL + strings.TrimPrefix(p, "schemas/") }
+func schemaURL(p string) string { return SchemaURL(p) }
 
-func messageSchemaPath(messageType string) string {
-	return "schemas/messages/" + strings.ToLower(messageType) + ".schema.json"
-}
+func messageSchemaPath(messageType string) string { return MessageSchemaPath(messageType) }
 
-// newCompiler registers every schema under its $id so $refs resolve without network access.
 func newCompiler(t *testing.T) *jsonschema.Compiler {
 	t.Helper()
-	c := jsonschema.NewCompiler()
-	for _, p := range schemaPaths(t) {
-		if err := c.AddResource(schemaURL(p), readJSON(t, p)); err != nil {
-			t.Fatalf("%s: %v", p, err)
-		}
+	c, err := Compiler(FS)
+	if err != nil {
+		t.Fatal(err)
 	}
 	return c
 }
@@ -282,5 +276,40 @@ func TestFixturesFitTextFrameCap(t *testing.T) {
 	}
 	if checked == 0 {
 		t.Fatal("no fixtures checked")
+	}
+}
+
+// Code generators (go-jsonschema) need typed roots and no anyOf for nullable envelope fields.
+func TestSchemasAreCodegenFriendly(t *testing.T) {
+	env := readJSON(t, "schemas/envelope.schema.json").(map[string]any)
+	for name, prop := range env["properties"].(map[string]any) {
+		p := prop.(map[string]any)
+		if _, ok := p["anyOf"]; ok {
+			t.Errorf("envelope.%s uses anyOf; use a type array", name)
+		}
+		if _, ok := p["type"]; !ok {
+			if _, isRef := p["$ref"]; !isRef {
+				t.Errorf("envelope.%s has no type", name)
+			}
+		}
+	}
+	for _, mt := range messageTypes {
+		t.Run(mt, func(t *testing.T) {
+			doc := readJSON(t, messageSchemaPath(mt)).(map[string]any)
+			if doc["type"] != "object" {
+				t.Errorf("root type = %v, want object", doc["type"])
+			}
+			props := doc["properties"].(map[string]any)
+			if ref := props["payload"].(map[string]any)["$ref"]; ref != "#/$defs/payload" {
+				t.Errorf(`properties.payload.$ref = %v, want "#/$defs/payload"`, ref)
+			}
+			defs, _ := doc["$defs"].(map[string]any)
+			if _, ok := defs["payload"]; !ok {
+				t.Error("no $defs.payload")
+			}
+			if typ := props["message_type"].(map[string]any)["type"]; typ != "string" {
+				t.Errorf("message_type type = %v, want string", typ)
+			}
+		})
 	}
 }

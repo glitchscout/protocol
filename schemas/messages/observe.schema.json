@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/observe.schema.json",
   "title": "OBSERVE",
   "description": "Orchestrator \u2192 engine. Pull one observation, or start/stop a STATE_UPDATE stream. Interest-management filters: radius, entity_types and max_n (nearest first). Omitted filters use the manifest's observe_defaults.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "OBSERVE"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

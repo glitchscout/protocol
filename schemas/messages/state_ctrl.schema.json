@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/state_ctrl.schema.json",
   "title": "STATE_CTRL",
   "description": "Orchestrator \u2192 engine. Reset tiers: RELOAD_SCENE (tier 1), SAVE/LOAD a slot (tier 2).",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "STATE_CTRL"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

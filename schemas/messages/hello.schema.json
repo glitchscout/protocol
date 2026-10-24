@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/hello.schema.json",
   "title": "HELLO",
   "description": "Engine \u2192 orchestrator. First message: token auth, protocol version negotiation, optional session resume, and the capability manifest.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "HELLO"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

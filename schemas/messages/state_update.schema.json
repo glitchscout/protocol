@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/state_update.schema.json",
   "title": "STATE_UPDATE",
   "description": "Engine \u2192 orchestrator. Streamed observation. mode delta carries only what changed since the previous update, plus ids removed since then.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "STATE_UPDATE"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "$ref": "../observation.schema.json",
       "properties": {

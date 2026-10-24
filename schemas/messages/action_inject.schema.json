@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/action_inject.schema.json",
   "title": "ACTION_INJECT",
   "description": "Orchestrator \u2192 engine. Semantic input keyed by the engine's input action names. A press with hold_ticks auto-releases after that many ticks.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "ACTION_INJECT"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

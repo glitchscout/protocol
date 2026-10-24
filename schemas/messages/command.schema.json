@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/command.schema.json",
   "title": "COMMAND",
   "description": "Orchestrator \u2192 engine. Setup or debug command: the standard set (load_scene, set_seed, teleport, set_flag, time_scale, god_mode, load_save, give_item, set_time) or a game-registered command from the manifest.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "COMMAND"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/goodbye.schema.json",
   "title": "GOODBYE",
   "description": "Either direction. Clean shutdown.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "GOODBYE"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {
