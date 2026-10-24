@@ -1,0 +1,23 @@
+{
+  "description": "Live-view frame, JPEG, downscaled from 1280x720.",
+  "valid": true,
+  "header": {
+    "magic": "GSBF",
+    "header_version": 1,
+    "frame_type": 2,
+    "encoding": 2,
+    "flags": 4,
+    "header_length": 64,
+    "payload_length": 1030,
+    "tick_frame": 99,
+    "request_id": "3f2a1c9e-8b7d-4e6f-9a0b-1c2d3e4f5a6b",
+    "width": 640,
+    "height": 360,
+    "source_width": 1280,
+    "source_height": 720,
+    "chunk_index": 0,
+    "chunk_count": 1,
+    "payload_crc32": 285475865
+  },
+  "payload_sha256": "7c7db029f0c9aea6349c88fad03bd355485a8fd9fd97168e15458493cf2c55cf"
+}

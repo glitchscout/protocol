@@ -1,0 +1,5 @@
+{
+  "description": "header_version 0 is not a valid version.",
+  "valid": false,
+  "reason": "bad_version"
+}

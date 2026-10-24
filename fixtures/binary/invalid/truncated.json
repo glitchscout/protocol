@@ -1,0 +1,5 @@
+{
+  "description": "Shorter than the 64-byte header.",
+  "valid": false,
+  "reason": "truncated"
+}

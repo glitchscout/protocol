@@ -1,0 +1,10 @@
+{
+  "description": "One screenshot split into 3 chunks; reassemble by request_id in chunk_index order.",
+  "chunks": [
+    "chunk-0.bin",
+    "chunk-1.bin",
+    "chunk-2.bin"
+  ],
+  "assembled_sha256": "7291514d2492fd7ff49e10ba7df95d19d31d199b89d74bcb62cebdee1bc1a498",
+  "assembled_bytes": 3000
+}
