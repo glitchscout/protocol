@@ -1,0 +1,95 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/common.schema.json",
+  "title": "Shared definitions",
+  "$defs": {
+    "uuid": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$",
+      "description": "Lower-case RFC 4122 UUID string."
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Stable identifier chosen by the game (node path, entity id, UI element path)."
+    },
+    "vec3": {
+      "type": "object",
+      "properties": {
+        "x": {
+          "type": "number"
+        },
+        "y": {
+          "type": "number"
+        },
+        "z": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "x",
+        "y",
+        "z"
+      ],
+      "additionalProperties": false,
+      "description": "World-space vector in game units. 2D games send z = 0."
+    },
+    "rect": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 4,
+      "maxItems": 4,
+      "description": "Screen rectangle [x, y, width, height] in pixels."
+    },
+    "screen_point": {
+      "type": "array",
+      "items": {
+        "type": "number"
+      },
+      "minItems": 2,
+      "maxItems": 2,
+      "description": "Screen position [x, y] in pixels."
+    },
+    "link_type": {
+      "enum": [
+        "walk",
+        "jump",
+        "drop",
+        "ladder",
+        "teleport"
+      ],
+      "description": "How a navigation segment is traversed, from the engine's off-mesh links."
+    },
+    "entity": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "#/$defs/vec3"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "properties": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "position"
+      ],
+      "additionalProperties": false,
+      "description": "A generic observable entity."
+    }
+  }
+}

@@ -1,0 +1,315 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/query_reply.schema.json",
+  "title": "QUERY_REPLY",
+  "description": "Engine \u2192 orchestrator. Reply to QUERY; kind echoes the request.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "QUERY_REPLY"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "nav_path",
+            "next_waypoint",
+            "nav_sample",
+            "raycast",
+            "line_of_sight",
+            "find_entities",
+            "is_on_screen"
+          ]
+        },
+        "result": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind",
+        "result"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "nav_path"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_nav_path"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "next_waypoint"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_next_waypoint"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "nav_sample"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_nav_sample"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "raycast"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_raycast"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "line_of_sight"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_line_of_sight"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "find_entities"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_find_entities"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "is_on_screen"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "result": {
+                "$ref": "#/$defs/result_is_on_screen"
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "result_nav_path": {
+      "type": "object",
+      "properties": {
+        "reachable": {
+          "type": "boolean"
+        },
+        "length": {
+          "type": "number",
+          "minimum": 0
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "from": {
+                "$ref": "../common.schema.json#/$defs/vec3"
+              },
+              "to": {
+                "$ref": "../common.schema.json#/$defs/vec3"
+              },
+              "link_type": {
+                "$ref": "../common.schema.json#/$defs/link_type"
+              }
+            },
+            "required": [
+              "from",
+              "to",
+              "link_type"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "reachable",
+        "segments"
+      ],
+      "additionalProperties": false
+    },
+    "result_next_waypoint": {
+      "type": "object",
+      "properties": {
+        "reachable": {
+          "type": "boolean"
+        },
+        "waypoint": {
+          "$ref": "../common.schema.json#/$defs/vec3"
+        },
+        "link_type": {
+          "$ref": "../common.schema.json#/$defs/link_type"
+        }
+      },
+      "required": [
+        "reachable"
+      ],
+      "additionalProperties": false
+    },
+    "result_nav_sample": {
+      "type": "object",
+      "properties": {
+        "points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "position": {
+                "$ref": "../common.schema.json#/$defs/vec3"
+              },
+              "reachable": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "position",
+              "reachable"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "points"
+      ],
+      "additionalProperties": false
+    },
+    "result_raycast": {
+      "type": "object",
+      "properties": {
+        "hit": {
+          "type": "boolean"
+        },
+        "point": {
+          "$ref": "../common.schema.json#/$defs/vec3"
+        },
+        "normal": {
+          "$ref": "../common.schema.json#/$defs/vec3"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "entity_id": {
+          "$ref": "../common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "hit"
+      ],
+      "additionalProperties": false
+    },
+    "result_line_of_sight": {
+      "type": "object",
+      "properties": {
+        "visible": {
+          "type": "boolean"
+        },
+        "blocker_id": {
+          "$ref": "../common.schema.json#/$defs/id"
+        }
+      },
+      "required": [
+        "visible"
+      ],
+      "additionalProperties": false
+    },
+    "result_find_entities": {
+      "type": "object",
+      "properties": {
+        "entities": {
+          "type": "array",
+          "items": {
+            "$ref": "../common.schema.json#/$defs/entity"
+          }
+        },
+        "truncated": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "entities"
+      ],
+      "additionalProperties": false
+    },
+    "result_is_on_screen": {
+      "type": "object",
+      "properties": {
+        "on_screen": {
+          "type": "boolean"
+        },
+        "screen_position": {
+          "$ref": "../common.schema.json#/$defs/screen_point"
+        }
+      },
+      "required": [
+        "on_screen"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

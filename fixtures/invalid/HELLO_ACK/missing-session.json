@@ -1,0 +1,14 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "HELLO_ACK",
+  "id": "00000003-0000-4000-8000-000000000003",
+  "reply_to": "00000001-0000-4000-8000-000000000001",
+  "session": "s-1",
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "protocol": "glitchscout/1",
+    "resumed": false,
+    "orchestrator_version": "0.1.0"
+  }
+}

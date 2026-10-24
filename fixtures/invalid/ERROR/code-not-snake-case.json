@@ -1,0 +1,14 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "ERROR",
+  "id": "0000002e-0000-4000-8000-00000000002e",
+  "reply_to": "00000001-0000-4000-8000-000000000001",
+  "session": null,
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "code": "Bad Token",
+    "message": "Session token rejected",
+    "retryable": false
+  }
+}

@@ -1,0 +1,212 @@
+package protocol
+
+import (
+	"bytes"
+	"encoding/json"
+	"io/fs"
+	"path"
+	"slices"
+	"strings"
+	"testing"
+
+	"github.com/santhosh-tekuri/jsonschema/v6"
+)
+
+const metaSchemaURL = "https://json-schema.org/draft/2020-12/schema"
+
+// messageTypes is every message type in protocol v1.
+var messageTypes = []string{
+	"HELLO", "HELLO_ACK", "OBSERVE", "OBSERVATION", "STATE_UPDATE", "EVENT", "ACTION_INJECT",
+	"UI_ACTION", "STEP", "COMMAND", "STATE_CTRL", "QUERY", "QUERY_REPLY", "CAPTURE", "ACK",
+	"HEARTBEAT", "ERROR", "GOODBYE",
+}
+
+func schemaPaths(t *testing.T) []string {
+	t.Helper()
+	var paths []string
+	err := fs.WalkDir(FS, "schemas", func(p string, d fs.DirEntry, err error) error {
+		if err == nil && !d.IsDir() && strings.HasSuffix(p, ".schema.json") {
+			paths = append(paths, p)
+		}
+		return err
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return paths
+}
+
+func readJSON(t *testing.T, p string) any {
+	t.Helper()
+	b, err := FS.ReadFile(p)
+	if err != nil {
+		t.Fatal(err)
+	}
+	doc, err := jsonschema.UnmarshalJSON(bytes.NewReader(b))
+	if err != nil {
+		t.Fatalf("%s: %v", p, err)
+	}
+	return doc
+}
+
+// schemaURL maps schemas/messages/step.schema.json to its $id.
+func schemaURL(p string) string { return SchemaBaseURL + strings.TrimPrefix(p, "schemas/") }
+
+func messageSchemaPath(messageType string) string {
+	return "schemas/messages/" + strings.ToLower(messageType) + ".schema.json"
+}
+
+// newCompiler registers every schema under its $id so $refs resolve without network access.
+func newCompiler(t *testing.T) *jsonschema.Compiler {
+	t.Helper()
+	c := jsonschema.NewCompiler()
+	for _, p := range schemaPaths(t) {
+		if err := c.AddResource(schemaURL(p), readJSON(t, p)); err != nil {
+			t.Fatalf("%s: %v", p, err)
+		}
+	}
+	return c
+}
+
+func compile(t *testing.T, c *jsonschema.Compiler, p string) *jsonschema.Schema {
+	t.Helper()
+	sch, err := c.Compile(schemaURL(p))
+	if err != nil {
+		t.Fatalf("compile %s: %v", p, err)
+	}
+	return sch
+}
+
+func fixtureFiles(t *testing.T, kind, dir string) []string {
+	t.Helper()
+	entries, err := fs.ReadDir(FS, path.Join("fixtures", kind, dir))
+	if err != nil {
+		return nil
+	}
+	var files []string
+	for _, e := range entries {
+		if !e.IsDir() && strings.HasSuffix(e.Name(), ".json") {
+			files = append(files, path.Join("fixtures", kind, dir, e.Name()))
+		}
+	}
+	return files
+}
+
+func TestSchemasConformToMetaschema(t *testing.T) {
+	paths := schemaPaths(t)
+	if len(paths) == 0 {
+		t.Fatal("no schemas found")
+	}
+	meta, err := jsonschema.NewCompiler().Compile(metaSchemaURL)
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := newCompiler(t)
+	for _, p := range paths {
+		t.Run(p, func(t *testing.T) {
+			doc := readJSON(t, p)
+			if err := meta.Validate(doc); err != nil {
+				t.Fatalf("not a valid Draft 2020-12 schema: %v", err)
+			}
+			m, _ := doc.(map[string]any)
+			if m["$schema"] != metaSchemaURL {
+				t.Errorf("$schema = %v, want %s", m["$schema"], metaSchemaURL)
+			}
+			if m["$id"] != schemaURL(p) {
+				t.Errorf("$id = %v, want %s", m["$id"], schemaURL(p))
+			}
+			compile(t, c, p)
+		})
+	}
+}
+
+func TestEveryMessageTypeHasSchemaAndFixtures(t *testing.T) {
+	for _, mt := range messageTypes {
+		t.Run(mt, func(t *testing.T) {
+			if _, err := fs.Stat(FS, messageSchemaPath(mt)); err != nil {
+				t.Errorf("missing schema %s", messageSchemaPath(mt))
+			}
+			if len(fixtureFiles(t, "valid", mt)) == 0 {
+				t.Errorf("no valid fixtures in fixtures/valid/%s", mt)
+			}
+			if len(fixtureFiles(t, "invalid", mt)) == 0 {
+				t.Errorf("no invalid fixtures in fixtures/invalid/%s", mt)
+			}
+		})
+	}
+}
+
+func TestEnvelopeEnumListsEveryMessageType(t *testing.T) {
+	doc := readJSON(t, "schemas/envelope.schema.json").(map[string]any)
+	props := doc["properties"].(map[string]any)
+	var got []string
+	for _, v := range props["message_type"].(map[string]any)["enum"].([]any) {
+		got = append(got, v.(string))
+	}
+	want := slices.Clone(messageTypes)
+	slices.Sort(got)
+	slices.Sort(want)
+	if !slices.Equal(got, want) {
+		t.Fatalf("envelope message_type enum = %v, want %v", got, want)
+	}
+}
+
+func TestValidFixtures(t *testing.T) {
+	c := newCompiler(t)
+	dispatch := compile(t, c, "schemas/message.schema.json")
+	for _, mt := range messageTypes {
+		own := compile(t, c, messageSchemaPath(mt))
+		for _, f := range fixtureFiles(t, "valid", mt) {
+			t.Run(f, func(t *testing.T) {
+				doc := readJSON(t, f)
+				if got := doc.(map[string]any)["message_type"]; got != mt {
+					t.Fatalf("message_type = %v, want %s (fixture directory)", got, mt)
+				}
+				if err := own.Validate(doc); err != nil {
+					t.Fatalf("rejected by %s: %v", messageSchemaPath(mt), err)
+				}
+				if err := dispatch.Validate(doc); err != nil {
+					t.Fatalf("rejected by message.schema.json: %v", err)
+				}
+			})
+		}
+	}
+}
+
+func TestInvalidFixtures(t *testing.T) {
+	c := newCompiler(t)
+	dispatch := compile(t, c, "schemas/message.schema.json")
+	dirs := append([]string{"envelope"}, messageTypes...)
+	for _, dir := range dirs {
+		for _, f := range fixtureFiles(t, "invalid", dir) {
+			t.Run(f, func(t *testing.T) {
+				doc := readJSON(t, f)
+				if dir != "envelope" {
+					if err := compile(t, c, messageSchemaPath(dir)).Validate(doc); err == nil {
+						t.Errorf("accepted by %s, want rejection", messageSchemaPath(dir))
+					}
+				}
+				if err := dispatch.Validate(doc); err == nil {
+					t.Errorf("accepted by message.schema.json, want rejection")
+				}
+			})
+		}
+	}
+}
+
+func TestFixturesFitTextFrameCap(t *testing.T) {
+	const maxTextFrame = 256 * 1024
+	for _, kind := range []string{"valid", "invalid"} {
+		_ = fs.WalkDir(FS, path.Join("fixtures", kind), func(p string, d fs.DirEntry, err error) error {
+			if err != nil || d.IsDir() {
+				return err
+			}
+			b, _ := FS.ReadFile(p)
+			var compact bytes.Buffer
+			if json.Compact(&compact, b) == nil && compact.Len() > maxTextFrame {
+				t.Errorf("%s is %d bytes compacted, over the %d-byte text-frame cap", p, compact.Len(), maxTextFrame)
+			}
+			return nil
+		})
+	}
+}

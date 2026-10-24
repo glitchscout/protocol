@@ -1,0 +1,16 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "QUERY_REPLY",
+  "id": "00000020-0000-4000-8000-000000000020",
+  "reply_to": "00000018-0000-4000-8000-000000000018",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "kind": "nav_path",
+    "result": {
+      "reachable": false,
+      "segments": []
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVE",
+  "id": "00000004-0000-4000-8000-000000000004",
+  "reply_to": null,
+  "session": "s-1",
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "radius": -1,
+    "entity_types": [
+      "door",
+      "enemy"
+    ],
+    "max_n": 32,
+    "sections": [
+      "player",
+      "interactables",
+      "threats"
+    ]
+  }
+}

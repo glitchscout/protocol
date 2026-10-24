@@ -1,0 +1,14 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "UI_ACTION",
+  "id": "00000012-0000-4000-8000-000000000012",
+  "reply_to": null,
+  "session": "s-1",
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "element_id": "options/volume",
+    "op": "set_value",
+    "value": 0.5
+  }
+}

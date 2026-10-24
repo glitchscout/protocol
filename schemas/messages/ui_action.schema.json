@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/ui_action.schema.json",
+  "title": "UI_ACTION",
+  "description": "Orchestrator \u2192 engine. Operate a UI element the way a player would (focus, then ui_accept). The ACK reports activation: direct when the SDK had to fall back to direct activation.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "UI_ACTION"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "element_id": {
+          "$ref": "../common.schema.json#/$defs/id"
+        },
+        "op": {
+          "enum": [
+            "focus",
+            "click",
+            "set_value",
+            "submit"
+          ]
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean"
+          ]
+        }
+      },
+      "required": [
+        "element_id",
+        "op"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "op": {
+            "const": "set_value"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "value"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "QUERY",
+  "id": "00000019-0000-4000-8000-000000000019",
+  "reply_to": null,
+  "session": "s-1",
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "kind": "nav_sample",
+    "params": {
+      "bounds": {
+        "min": {
+          "x": -10,
+          "y": 0,
+          "z": -10
+        },
+        "max": {
+          "x": 10,
+          "y": 2,
+          "z": 10
+        }
+      },
+      "spacing": 2.0
+    }
+  }
+}

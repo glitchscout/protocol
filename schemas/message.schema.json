@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/message.schema.json",
+  "title": "Any glitchscout/1 message",
+  "description": "Validates a JSON text frame of any message type.",
+  "oneOf": [
+    {
+      "$ref": "messages/hello.schema.json"
+    },
+    {
+      "$ref": "messages/hello_ack.schema.json"
+    },
+    {
+      "$ref": "messages/observe.schema.json"
+    },
+    {
+      "$ref": "messages/observation.schema.json"
+    },
+    {
+      "$ref": "messages/state_update.schema.json"
+    },
+    {
+      "$ref": "messages/event.schema.json"
+    },
+    {
+      "$ref": "messages/action_inject.schema.json"
+    },
+    {
+      "$ref": "messages/ui_action.schema.json"
+    },
+    {
+      "$ref": "messages/step.schema.json"
+    },
+    {
+      "$ref": "messages/command.schema.json"
+    },
+    {
+      "$ref": "messages/state_ctrl.schema.json"
+    },
+    {
+      "$ref": "messages/query.schema.json"
+    },
+    {
+      "$ref": "messages/query_reply.schema.json"
+    },
+    {
+      "$ref": "messages/capture.schema.json"
+    },
+    {
+      "$ref": "messages/ack.schema.json"
+    },
+    {
+      "$ref": "messages/heartbeat.schema.json"
+    },
+    {
+      "$ref": "messages/error.schema.json"
+    },
+    {
+      "$ref": "messages/goodbye.schema.json"
+    }
+  ]
+}

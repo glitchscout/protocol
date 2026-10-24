@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/state_update.schema.json",
+  "title": "STATE_UPDATE",
+  "description": "Engine \u2192 orchestrator. Streamed observation. mode delta carries only what changed since the previous update, plus ids removed since then.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "STATE_UPDATE"
+    },
+    "payload": {
+      "$ref": "../observation.schema.json",
+      "properties": {
+        "mode": {
+          "enum": [
+            "full",
+            "delta"
+          ]
+        },
+        "removed": {
+          "type": "object",
+          "properties": {
+            "interactables": {
+              "type": "array",
+              "items": {
+                "$ref": "../common.schema.json#/$defs/id"
+              }
+            },
+            "threats": {
+              "type": "array",
+              "items": {
+                "$ref": "../common.schema.json#/$defs/id"
+              }
+            },
+            "ui_elements": {
+              "type": "array",
+              "items": {
+                "$ref": "../common.schema.json#/$defs/id"
+              }
+            },
+            "entities": {
+              "type": "array",
+              "items": {
+                "$ref": "../common.schema.json#/$defs/id"
+              }
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "unevaluatedProperties": false
+    }
+  }
+}

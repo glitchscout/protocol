@@ -1,0 +1,109 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "HELLO",
+  "id": "00000001-0000-4000-8000-000000000001",
+  "reply_to": null,
+  "session": null,
+  "tick_frame": 0,
+  "ts": 1761264000.25,
+  "payload": {
+    "token": "tok-fixture",
+    "protocol_versions": [
+      "glitchscout/1"
+    ],
+    "manifest": {
+      "engine": {
+        "name": "godot",
+        "version": "4.5.1"
+      },
+      "sdk_version": "0.1.0",
+      "build_id": "fixture-2026-10-23",
+      "input_actions": [
+        {
+          "name": "move_left",
+          "type": "button"
+        },
+        {
+          "name": "move_right",
+          "type": "button"
+        },
+        {
+          "name": "jump",
+          "type": "button"
+        },
+        {
+          "name": "interact",
+          "type": "button"
+        },
+        {
+          "name": "move",
+          "type": "axis_2d"
+        },
+        {
+          "name": "look",
+          "type": "axis_2d"
+        }
+      ],
+      "movement_space": "camera",
+      "camera_actions": [
+        "look"
+      ],
+      "combat_actions": [],
+      "physics_hints": {
+        "move_speed": 5.0,
+        "jump_height": 1.2,
+        "units_per_meter": 1.0
+      },
+      "entity_types": [
+        "door",
+        "lever",
+        "keycard",
+        "enemy"
+      ],
+      "events": [
+        "player_died",
+        "scene_changed",
+        "dialogue_started"
+      ],
+      "commands": [
+        {
+          "name": "teleport"
+        },
+        {
+          "name": "set_flag"
+        },
+        {
+          "name": "god_mode"
+        },
+        {
+          "name": "load_save"
+        },
+        {
+          "name": "spawn_crate",
+          "description": "Game-registered command"
+        }
+      ],
+      "supports": {
+        "step_mode": true,
+        "reset_tiers": [
+          1
+        ],
+        "navmesh": true,
+        "nav_links": true,
+        "ui_tree": true,
+        "screenshots": true,
+        "seed": true,
+        "save_fixtures": false,
+        "god_mode": true
+      },
+      "limits": {
+        "max_text_frame_bytes": 262144,
+        "max_binary_frame_bytes": 8388608,
+        "observe_defaults": {
+          "radius": 30.0,
+          "max_n": 64
+        }
+      }
+    }
+  }
+}

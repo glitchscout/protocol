@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/observe.schema.json",
+  "title": "OBSERVE",
+  "description": "Orchestrator \u2192 engine. Pull one observation, or start/stop a STATE_UPDATE stream. Interest-management filters: radius, entity_types and max_n (nearest first). Omitted filters use the manifest's observe_defaults.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "OBSERVE"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "radius": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "entity_types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "max_n": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sections": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "player",
+              "interactables",
+              "camera",
+              "threats",
+              "ui_elements",
+              "entities"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "max_bytes": {
+          "type": "integer",
+          "minimum": 65536,
+          "description": "Raise the text-frame cap for this observation."
+        },
+        "stream_hz": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 60,
+          "description": "Start a STATE_UPDATE stream at this rate; 0 stops it."
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}

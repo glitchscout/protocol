@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/state_ctrl.schema.json",
+  "title": "STATE_CTRL",
+  "description": "Orchestrator \u2192 engine. Reset tiers: RELOAD_SCENE (tier 1), SAVE/LOAD a slot (tier 2).",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "STATE_CTRL"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "op": {
+          "enum": [
+            "RELOAD_SCENE",
+            "SAVE",
+            "LOAD"
+          ]
+        },
+        "slot": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "op"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "op": {
+            "enum": [
+              "SAVE",
+              "LOAD"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "slot"
+        ]
+      }
+    }
+  }
+}

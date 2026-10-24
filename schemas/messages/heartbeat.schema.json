@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/heartbeat.schema.json",
+  "title": "HEARTBEAT",
+  "description": "Either direction. Liveness.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "HEARTBEAT"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "uptime_ms": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
