@@ -1,0 +1,56 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "QUERY_REPLY",
+  "id": "0000001f-0000-4000-8000-00000000001f",
+  "reply_to": "00000018-0000-4000-8000-000000000018",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "kind": "nav_path",
+    "result": {
+      "length": 14.2,
+      "segments": [
+        {
+          "from": {
+            "x": 0,
+            "y": 0,
+            "z": 0
+          },
+          "to": {
+            "x": 6,
+            "y": 0,
+            "z": 0
+          },
+          "link_type": "walk"
+        },
+        {
+          "from": {
+            "x": 6,
+            "y": 0,
+            "z": 0
+          },
+          "to": {
+            "x": 8,
+            "y": 1,
+            "z": 0
+          },
+          "link_type": "jump"
+        },
+        {
+          "from": {
+            "x": 8,
+            "y": 1,
+            "z": 0
+          },
+          "to": {
+            "x": 12,
+            "y": 0,
+            "z": -1.5
+          },
+          "link_type": "walk"
+        }
+      ]
+    }
+  }
+}

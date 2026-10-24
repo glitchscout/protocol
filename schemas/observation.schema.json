@@ -1,0 +1,222 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/observation.schema.json",
+  "title": "Observation",
+  "description": "Game state snapshot. Every section is optional; the SDK sends the sections OBSERVE asked for. Interest management: entity arrays are sorted by distance and cut to OBSERVE.max_n, and an observation that would exceed the text-frame cap (manifest limits.max_text_frame_bytes, default 262144) is truncated by distance and flagged truncated: true.",
+  "type": "object",
+  "properties": {
+    "player": {
+      "$ref": "#/$defs/player"
+    },
+    "interactables": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/interactable"
+      }
+    },
+    "camera": {
+      "$ref": "#/$defs/camera"
+    },
+    "threats": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/threat"
+      }
+    },
+    "ui_elements": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ui_element"
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/entity"
+      }
+    },
+    "truncated": {
+      "type": "boolean",
+      "description": "True when entities were dropped to fit the text-frame cap."
+    }
+  },
+  "$defs": {
+    "player": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "velocity": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "health": {
+          "type": "number"
+        },
+        "state_flags": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scene": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "position",
+        "velocity"
+      ],
+      "additionalProperties": false
+    },
+    "interactable": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "required_action": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interaction_range": {
+          "type": "number",
+          "minimum": 0
+        },
+        "requires": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "position": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "yaw": {
+          "type": "number"
+        },
+        "pitch": {
+          "type": "number"
+        },
+        "mode": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "position",
+        "yaw",
+        "pitch"
+      ],
+      "additionalProperties": false
+    },
+    "threat": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "distance": {
+          "type": "number",
+          "minimum": 0
+        },
+        "health": {
+          "type": "number"
+        },
+        "attack_range": {
+          "type": "number",
+          "minimum": 0
+        },
+        "state": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "id",
+        "position"
+      ],
+      "additionalProperties": false
+    },
+    "ui_element": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "text": {
+          "type": "string"
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "visible": {
+          "type": "boolean"
+        },
+        "focused": {
+          "type": "boolean"
+        },
+        "rect": {
+          "$ref": "common.schema.json#/$defs/rect"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "boolean",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "type",
+        "enabled",
+        "visible"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

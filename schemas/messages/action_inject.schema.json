@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/action_inject.schema.json",
+  "title": "ACTION_INJECT",
+  "description": "Orchestrator \u2192 engine. Semantic input keyed by the engine's input action names. A press with hold_ticks auto-releases after that many ticks.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "ACTION_INJECT"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "digital_buttons": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "op": {
+                "enum": [
+                  "press",
+                  "release"
+                ]
+              },
+              "hold_ticks": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "action",
+              "op"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "analog_axes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "type": "string",
+                "minLength": 1
+              },
+              "x": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              },
+              "y": {
+                "type": "number",
+                "minimum": -1,
+                "maximum": 1
+              }
+            },
+            "required": [
+              "action",
+              "x"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    }
+  }
+}

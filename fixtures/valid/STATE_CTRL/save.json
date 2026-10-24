@@ -1,0 +1,13 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "STATE_CTRL",
+  "id": "00000017-0000-4000-8000-000000000017",
+  "reply_to": null,
+  "session": "s-1",
+  "tick_frame": null,
+  "ts": 1761264000.25,
+  "payload": {
+    "op": "SAVE",
+    "slot": "before_door"
+  }
+}

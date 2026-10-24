@@ -1,0 +1,27 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "00000008-0000-4000-8000-000000000008",
+  "reply_to": "00000005-0000-4000-8000-000000000005",
+  "session": "s-1",
+  "tick_frame": 3,
+  "ts": 1761264000.25,
+  "payload": {
+    "ui_elements": [
+      {
+        "id": "main_menu/play",
+        "type": "button",
+        "text": "Play",
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "rect": [
+          540,
+          300,
+          200,
+          48
+        ]
+      }
+    ]
+  }
+}

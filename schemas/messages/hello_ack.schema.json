@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/hello_ack.schema.json",
+  "title": "HELLO_ACK",
+  "description": "Orchestrator \u2192 engine. Accepts HELLO and assigns (or resumes) the session. A rejected HELLO gets ERROR instead.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "HELLO_ACK"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "protocol": {
+          "const": "glitchscout/1"
+        },
+        "session": {
+          "type": "string",
+          "minLength": 1
+        },
+        "resumed": {
+          "type": "boolean"
+        },
+        "orchestrator_version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "protocol",
+        "session",
+        "resumed"
+      ],
+      "additionalProperties": false
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
+    }
+  }
+}

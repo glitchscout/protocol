@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/capture.schema.json",
+  "title": "CAPTURE",
+  "description": "Orchestrator \u2192 engine. Request a screenshot. The engine replies with binary frames (binary-frame-v1) carrying this message's id as request_id, or ERROR frame_too_large.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "CAPTURE"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "encoding": {
+          "enum": [
+            "png",
+            "jpeg"
+          ]
+        },
+        "max_long_edge": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "lossless": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "encoding"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

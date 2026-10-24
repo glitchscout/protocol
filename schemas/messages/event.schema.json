@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/event.schema.json",
+  "title": "EVENT",
+  "description": "Engine \u2192 orchestrator. A game event, a forwarded log line, or a script error.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "EVENT"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "game",
+            "log",
+            "script_error"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "level": {
+          "enum": [
+            "debug",
+            "info",
+            "warning",
+            "error"
+          ]
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "object"
+        }
+      },
+      "required": [
+        "kind"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "game"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "enum": [
+                  "log",
+                  "script_error"
+                ]
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "level",
+              "message"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

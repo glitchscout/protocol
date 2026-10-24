@@ -1,0 +1,21 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "QUERY_REPLY",
+  "id": "00000025-0000-4000-8000-000000000025",
+  "reply_to": "0000001d-0000-4000-8000-00000000001d",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "kind": "next_waypoint",
+    "result": {
+      "reachable": true,
+      "waypoint": {
+        "x": 2,
+        "y": 0,
+        "z": 2
+      },
+      "link_type": "walk"
+    }
+  }
+}

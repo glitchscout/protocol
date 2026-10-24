@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/hello.schema.json",
+  "title": "HELLO",
+  "description": "Engine \u2192 orchestrator. First message: token auth, protocol version negotiation, optional session resume, and the capability manifest.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "HELLO"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "minLength": 1
+        },
+        "protocol_versions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^glitchscout/[0-9]+$"
+          },
+          "minItems": 1
+        },
+        "resume": {
+          "type": "object",
+          "properties": {
+            "session": {
+              "type": "string",
+              "minLength": 1
+            },
+            "last_tick": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "required": [
+            "session",
+            "last_tick"
+          ],
+          "additionalProperties": false
+        },
+        "manifest": {
+          "$ref": "../manifest.schema.json"
+        }
+      },
+      "required": [
+        "token",
+        "protocol_versions",
+        "manifest"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/envelope.schema.json",
+  "title": "Envelope",
+  "description": "Fields every glitchscout/1 JSON text frame carries. Message schemas refine message_type and payload.",
+  "type": "object",
+  "properties": {
+    "protocol": {
+      "const": "glitchscout/1"
+    },
+    "message_type": {
+      "enum": [
+        "HELLO",
+        "HELLO_ACK",
+        "OBSERVE",
+        "OBSERVATION",
+        "STATE_UPDATE",
+        "EVENT",
+        "ACTION_INJECT",
+        "UI_ACTION",
+        "STEP",
+        "COMMAND",
+        "STATE_CTRL",
+        "QUERY",
+        "QUERY_REPLY",
+        "CAPTURE",
+        "ACK",
+        "HEARTBEAT",
+        "ERROR",
+        "GOODBYE"
+      ]
+    },
+    "id": {
+      "$ref": "common.schema.json#/$defs/uuid"
+    },
+    "reply_to": {
+      "anyOf": [
+        {
+          "$ref": "common.schema.json#/$defs/uuid"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "id of the request this message answers."
+    },
+    "session": {
+      "anyOf": [
+        {
+          "type": "string",
+          "minLength": 1
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Session id from HELLO_ACK; null before it is assigned."
+    },
+    "tick_frame": {
+      "anyOf": [
+        {
+          "type": "integer",
+          "minimum": 0
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "description": "Game tick the message refers to; null when the sender doesn't know it."
+    },
+    "ts": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Sender wall-clock time, Unix seconds."
+    },
+    "payload": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "protocol",
+    "message_type",
+    "id",
+    "reply_to",
+    "session",
+    "tick_frame",
+    "ts",
+    "payload"
+  ],
+  "additionalProperties": false
+}

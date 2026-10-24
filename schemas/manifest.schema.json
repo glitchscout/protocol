@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/manifest.schema.json",
+  "title": "Capability manifest",
+  "description": "What the game exposes, sent in HELLO.",
+  "type": "object",
+  "properties": {
+    "engine": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "enum": [
+            "godot",
+            "unity",
+            "unreal",
+            "fake"
+          ]
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "required": [
+        "name",
+        "version"
+      ],
+      "additionalProperties": false
+    },
+    "sdk_version": {
+      "type": "string",
+      "minLength": 1
+    },
+    "build_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "input_actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "type": {
+            "enum": [
+              "button",
+              "axis_1d",
+              "axis_2d"
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "type"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "movement_space": {
+      "enum": [
+        "camera",
+        "world",
+        "screen"
+      ]
+    },
+    "camera_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "combat_actions": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "physics_hints": {
+      "type": "object",
+      "properties": {
+        "move_speed": {
+          "type": "number",
+          "minimum": 0
+        },
+        "jump_height": {
+          "type": "number",
+          "minimum": 0
+        },
+        "units_per_meter": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "entity_types": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "events": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "commands": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "supports": {
+      "type": "object",
+      "properties": {
+        "step_mode": {
+          "type": "boolean"
+        },
+        "reset_tiers": {
+          "type": "array",
+          "items": {
+            "enum": [
+              1,
+              2,
+              3
+            ]
+          },
+          "uniqueItems": true
+        },
+        "navmesh": {
+          "type": "boolean"
+        },
+        "nav_links": {
+          "type": "boolean"
+        },
+        "ui_tree": {
+          "type": "boolean"
+        },
+        "screenshots": {
+          "type": "boolean"
+        },
+        "seed": {
+          "type": "boolean"
+        },
+        "save_fixtures": {
+          "type": "boolean"
+        },
+        "god_mode": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "step_mode",
+        "reset_tiers",
+        "navmesh",
+        "nav_links",
+        "ui_tree",
+        "screenshots",
+        "seed",
+        "save_fixtures",
+        "god_mode"
+      ],
+      "additionalProperties": false
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "max_text_frame_bytes": {
+          "type": "integer",
+          "minimum": 65536,
+          "default": 262144,
+          "description": "Largest JSON text frame the SDK sends unless the orchestrator asks for more (OBSERVE.max_bytes)."
+        },
+        "max_binary_frame_bytes": {
+          "type": "integer",
+          "minimum": 65536,
+          "maximum": 4194304,
+          "default": 4194304,
+          "description": "Hard cap on an assembled binary frame (header plus payload)."
+        },
+        "observe_defaults": {
+          "type": "object",
+          "properties": {
+            "radius": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "max_n": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "engine",
+    "sdk_version",
+    "input_actions",
+    "movement_space",
+    "supports",
+    "limits"
+  ],
+  "additionalProperties": false
+}

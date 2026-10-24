@@ -1,0 +1,27 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "QUERY_REPLY",
+  "id": "00000021-0000-4000-8000-000000000021",
+  "reply_to": "0000001a-0000-4000-8000-00000000001a",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "kind": "raycast",
+    "result": {
+      "hit": true,
+      "point": {
+        "x": 4,
+        "y": 1,
+        "z": 0
+      },
+      "normal": {
+        "x": -1,
+        "y": 0,
+        "z": 0
+      },
+      "distance": 4.0,
+      "entity_id": "wall_7"
+    }
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/ack.schema.json",
+  "title": "ACK",
+  "description": "Either direction. Success reply to a request that has no dedicated reply type (ACTION_INJECT, UI_ACTION, STEP, COMMAND, STATE_CTRL, CAPTURE). Failures get ERROR.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "ACK"
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "object",
+          "properties": {
+            "tick_frame": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "activation": {
+              "enum": [
+                "focus_accept",
+                "direct"
+              ]
+            },
+            "frames": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "value": {}
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
+    }
+  }
+}

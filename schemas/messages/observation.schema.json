@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/observation.schema.json",
+  "title": "OBSERVATION",
+  "description": "Engine \u2192 orchestrator. Reply to OBSERVE.",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "const": "OBSERVATION"
+    },
+    "payload": {
+      "$ref": "../observation.schema.json",
+      "unevaluatedProperties": false
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
+    }
+  }
+}
