@@ -20,7 +20,12 @@
   },
   "$defs": {
     "payload": {
-      "$ref": "../observation.schema.json",
+      "type": "object",
+      "allOf": [
+        {
+          "$ref": "../observation.schema.json"
+        }
+      ],
       "properties": {
         "mode": {
           "enum": [

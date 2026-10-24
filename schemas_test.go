@@ -313,3 +313,29 @@ func TestSchemasAreCodegenFriendly(t *testing.T) {
 		})
 	}
 }
+
+// go-jsonschema follows a $ref and ignores keywords beside it, so a schema must not pair $ref with
+// properties; compose with allOf instead.
+func TestNoPropertiesBesideRef(t *testing.T) {
+	var walk func(p, at string, node any)
+	walk = func(p, at string, node any) {
+		switch n := node.(type) {
+		case map[string]any:
+			if _, ref := n["$ref"]; ref {
+				if _, props := n["properties"]; props {
+					t.Errorf("%s at %s: $ref with sibling properties; use allOf", p, at)
+				}
+			}
+			for k, v := range n {
+				walk(p, at+"/"+k, v)
+			}
+		case []any:
+			for i, v := range n {
+				walk(p, fmt.Sprintf("%s/%d", at, i), v)
+			}
+		}
+	}
+	for _, p := range schemaPaths(t) {
+		walk(p, "", readJSON(t, p))
+	}
+}
