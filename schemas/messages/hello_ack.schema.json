@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/hello_ack.schema.json",
   "title": "HELLO_ACK",
   "description": "Orchestrator \u2192 engine. Accepts HELLO and assigns (or resumes) the session. A rejected HELLO gets ERROR instead.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,18 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "HELLO_ACK"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {
@@ -36,10 +47,6 @@
         "resumed"
       ],
       "additionalProperties": false
-    },
-    "reply_to": {
-      "$ref": "../common.schema.json#/$defs/uuid",
-      "description": "Replies always carry the id of the request they answer."
     }
   }
 }

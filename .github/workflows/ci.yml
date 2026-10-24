@@ -21,3 +21,18 @@ jobs:
         run: test -z "$(gofmt -l .)" || { gofmt -l .; exit 1; }
       - run: go vet ./...
       - run: go test -race -count=1 ./...
+
+  compat:
+    # Within a protocol version, schema changes must keep accepting every golden fixture on the base branch.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - run: git worktree add "$RUNNER_TEMP/base" "origin/${{ github.base_ref }}"
+      - run: go run ./cmd/compatcheck -base "$RUNNER_TEMP/base" -head .

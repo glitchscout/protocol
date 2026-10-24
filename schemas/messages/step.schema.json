@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/step.schema.json",
   "title": "STEP",
   "description": "Orchestrator \u2192 engine. Advance exactly ticks fixed ticks in step mode. The ACK carries the resulting tick.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "STEP"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

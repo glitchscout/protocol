@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/query_reply.schema.json",
   "title": "QUERY_REPLY",
   "description": "Engine \u2192 orchestrator. Reply to QUERY; kind echoes the request.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,18 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "QUERY_REPLY"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    },
+    "reply_to": {
+      "$ref": "../common.schema.json#/$defs/uuid",
+      "description": "Replies always carry the id of the request they answer."
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {
@@ -150,12 +161,6 @@
         }
       ]
     },
-    "reply_to": {
-      "$ref": "../common.schema.json#/$defs/uuid",
-      "description": "Replies always carry the id of the request they answer."
-    }
-  },
-  "$defs": {
     "result_nav_path": {
       "type": "object",
       "properties": {

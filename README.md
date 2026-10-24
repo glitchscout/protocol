@@ -57,6 +57,19 @@ b, err := protocol.FS.ReadFile("schemas/messages/step.schema.json")
 Schema `$id`s live under `https://glitchscout.com/schemas/v1/`; resolve them from `protocol.FS`
 rather than over the network.
 
+`protocol.Compiler(protocol.FS)` returns a `santhosh-tekuri/jsonschema` compiler with every schema registered.
+
+## Compatibility
+
+Within a protocol version, a schema change must keep accepting every golden fixture on the base
+branch, and no message type may be removed. CI checks every pull request with:
+
+```bash
+go run ./cmd/compatcheck -base <checkout of main> -head .
+```
+
+A breaking change needs a new protocol version (`glitchscout/2`).
+
 ## Checks
 
 ```bash

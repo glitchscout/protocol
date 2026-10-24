@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/error.schema.json",
   "title": "ERROR",
   "description": "Either direction. Structured error, usually a reply to the failed request.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "ERROR"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

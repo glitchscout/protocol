@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/event.schema.json",
   "title": "EVENT",
   "description": "Engine \u2192 orchestrator. A game event, a forwarded log line, or a script error.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "EVENT"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {

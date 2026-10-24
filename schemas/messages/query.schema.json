@@ -3,6 +3,7 @@
   "$id": "https://glitchscout.com/schemas/v1/messages/query.schema.json",
   "title": "QUERY",
   "description": "Orchestrator \u2192 engine. Spatial and entity queries. NAVMESH_QUERY from earlier drafts is the nav_path / next_waypoint / nav_sample kinds.",
+  "type": "object",
   "allOf": [
     {
       "$ref": "../envelope.schema.json"
@@ -10,8 +11,14 @@
   ],
   "properties": {
     "message_type": {
+      "type": "string",
       "const": "QUERY"
     },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
     "payload": {
       "type": "object",
       "properties": {
@@ -149,9 +156,7 @@
           }
         }
       ]
-    }
-  },
-  "$defs": {
+    },
     "params_nav_path": {
       "type": "object",
       "properties": {
