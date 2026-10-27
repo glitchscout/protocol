@@ -45,6 +45,20 @@ Screenshots and live-view frames are WebSocket binary messages: a 64-byte little
 the payload. See [binary-frame-v1.md](binary-frame-v1.md) and the Kaitai Struct definition
 [binary-frame-v1.ksy](binary-frame-v1.ksy). Golden frames are in `fixtures/binary/`.
 
+## Evidence formats
+
+What a run leaves behind is versioned with the protocol, in `schemas/evidence/`, so reporters, dashboards and
+other tools can read it without the orchestrator:
+
+| Schema | File | What |
+|---|---|---|
+| `run` | `runs/<run_id>/run.json` | versions, build and the tests selected |
+| `result` | `results/<test_id>/attempt-<n>/result.json` | status, each Gherkin step's status, the deciding oracle, findings, timings, cost |
+| `trace_line` | `trace.jsonl` (one object per line) | per step: tick, observation digest, decision, skill, actions, oracle values, events |
+| `evidence_index` | `evidence_index.json` | every file of the attempt with its type, SHA-256, size and tick range |
+
+Files are validated against these schemas when they are written. Fixtures are in `fixtures/evidence/`.
+
 ## Fixtures
 
 `fixtures/valid/<MESSAGE_TYPE>/*.json` are golden messages every implementation must accept;

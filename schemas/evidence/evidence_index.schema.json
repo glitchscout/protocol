@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/evidence/evidence_index.schema.json",
+  "title": "evidence_index",
+  "description": "evidence_index.json: every file of one attempt with its type, hash, size and the ticks it covers.",
+  "type": "object",
+  "properties": {
+    "test_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Relative to the attempt directory, with forward slashes: no leading slash, no .. segment, no backslash or colon.",
+            "pattern": "^(?:[^./\\\\:][^/\\\\:]*|\\.|\\.[^./\\\\:][^/\\\\:]*|\\.\\.[^/\\\\:]+)(?:/(?:[^./\\\\:][^/\\\\:]*|\\.|\\.[^./\\\\:][^/\\\\:]*|\\.\\.[^/\\\\:]+))*$"
+          },
+          "type": {
+            "enum": [
+              "result",
+              "trace",
+              "model",
+              "screenshot",
+              "video",
+              "log",
+              "crash",
+              "metrics",
+              "coverage_map",
+              "reflections",
+              "bt_trace",
+              "repro",
+              "other"
+            ]
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "size": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "tick_range": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "minItems": 2,
+            "maxItems": 2
+          }
+        },
+        "required": [
+          "path",
+          "type",
+          "sha256",
+          "size"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "test_id",
+    "attempt",
+    "files"
+  ],
+  "additionalProperties": false
+}

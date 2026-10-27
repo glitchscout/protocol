@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/evidence/result.schema.json",
+  "title": "result",
+  "description": "results/<test_id>/attempt-<n>/result.json: how one attempt at one test ended, step by step.",
+  "type": "object",
+  "properties": {
+    "test_id": { "type": "string", "minLength": 1 },
+    "attempt": { "type": "integer", "minimum": 1 },
+    "status": {
+      "enum": ["passed", "failed", "crashed", "hung", "softlock_suspected", "agent_failure", "blocked", "harness_error", "env_error", "timed_out", "budget_exceeded", "inconclusive", "skipped"]
+    },
+    "category": { "type": "string", "minLength": 1 },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "plan_hash": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$" },
+    "uri": { "type": "string", "minLength": 1 },
+    "line": { "type": "integer", "minimum": 1 },
+    "feature": { "type": "string" },
+    "scenario": { "type": "string" },
+    "tags": { "type": "array", "items": { "type": "string", "pattern": "^@" } },
+    "steps": {
+      "type": "array",
+      "description": "Every Gherkin step of the scenario (Background steps included), in order.",
+      "items": { "$ref": "#/$defs/step" }
+    },
+    "failure": {
+      "type": "object",
+      "description": "The oracle that decided a non-passing result, if one did.",
+      "properties": {
+        "oracle_id": { "type": "string", "minLength": 1 },
+        "role": { "enum": ["success", "fail_if", "invariant", "precondition", "process"] },
+        "reason": { "type": "string" },
+        "step": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 },
+        "tick": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["oracle_id", "role", "reason"],
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "description": "Suspected bugs that didn't decide the status (e.g. ui_overlap).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "oracle": { "type": "string", "minLength": 1 },
+          "subject": { "type": "string" },
+          "tick": { "type": "integer", "minimum": 0 },
+          "detail": { "type": "string" }
+        },
+        "required": ["oracle", "subject"],
+        "additionalProperties": false
+      }
+    },
+    "timings": {
+      "type": "object",
+      "properties": {
+        "started_at": { "type": "string", "format": "date-time" },
+        "finished_at": { "type": "string", "format": "date-time" },
+        "wall_ms": { "type": "number", "minimum": 0 },
+        "game_ticks": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["started_at", "wall_ms"],
+      "additionalProperties": false
+    },
+    "cost": {
+      "type": "object",
+      "properties": {
+        "model_calls": { "type": "integer", "minimum": 0 },
+        "usd": { "type": "number", "minimum": 0 }
+      },
+      "required": ["model_calls", "usd"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["test_id", "attempt", "status", "uri", "line", "scenario", "steps", "timings"],
+  "additionalProperties": false,
+  "$defs": {
+    "step": {
+      "type": "object",
+      "properties": {
+        "keyword": { "type": "string", "minLength": 1, "description": "As written, e.g. Given, And, Soit." },
+        "text": { "type": "string" },
+        "line": { "type": "integer", "minimum": 1 },
+        "status": { "enum": ["passed", "failed", "skipped", "undefined"] },
+        "duration_ms": { "type": "number", "minimum": 0 },
+        "error": { "type": "string" },
+        "attachments": {
+          "type": "array",
+          "description": "Evidence files for this step, relative to the attempt directory.",
+          "items": { "type": "string", "minLength": 1 }
+        }
+      },
+      "required": ["keyword", "text", "line", "status"],
+      "additionalProperties": false
+    }
+  }
+}

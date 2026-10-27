@@ -1,0 +1,51 @@
+{
+  "test_id": "qa/features/intro.feature:10",
+  "attempt": 0,
+  "status": "passed",
+  "plan_hash": "sha256:3ea985de573fd5c5636ec14abdb4d09e05e962010f24a06b97377ed756d761ae",
+  "uri": "qa/features/intro.feature",
+  "line": 10,
+  "feature": "First NPC conversation",
+  "scenario": "Player reaches the elder and starts a conversation",
+  "tags": [
+    "@smoke",
+    "@P1"
+  ],
+  "steps": [
+    {
+      "keyword": "Given",
+      "text": "the game is loaded from save \"intro\"",
+      "line": 6,
+      "status": "passed",
+      "duration_ms": 412
+    },
+    {
+      "keyword": "When",
+      "text": "the player talks to \"elder\"",
+      "line": 11,
+      "status": "passed",
+      "duration_ms": 9310
+    },
+    {
+      "keyword": "Then",
+      "text": "the event \"dialogue_started\" should occur within 120 seconds",
+      "line": 12,
+      "status": "passed",
+      "duration_ms": 0,
+      "attachments": [
+        "screenshots/then-12.png"
+      ]
+    }
+  ],
+  "findings": [],
+  "timings": {
+    "started_at": "2026-10-27T10:00:01Z",
+    "finished_at": "2026-10-27T10:00:11Z",
+    "wall_ms": 10204,
+    "game_ticks": 1830
+  },
+  "cost": {
+    "model_calls": 0,
+    "usd": 0
+  }
+}

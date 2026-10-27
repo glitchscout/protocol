@@ -1,0 +1,10 @@
+{
+  "tick": 1240,
+  "wall_ms": 16012.5,
+  "observation_digest": "sha256:2b4d6f8a0c2e4b6d8f0a2c4e6b8d0f2a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d",
+  "decision": "go_to gate_north",
+  "skill": "navigate_to",
+  "actions": [{"type": "move", "axis": "move", "value": [0, 1], "ticks": 4}],
+  "oracle_results": [{"oracle_id": "success/0", "value": false}, {"oracle_id": "invariant/0", "value": null}],
+  "events": ["gate_opened"]
+}
