@@ -1,0 +1,15 @@
+{
+  "fixtures": {
+    "run/missing_run_id.json": "",
+    "result/bad_status.json": "/status",
+    "result/bad_step_status.json": "/steps/3/status",
+    "result/attempt_zero.json": "/attempt",
+    "trace_line/negative_tick.json": "/tick",
+    "trace_line/oracle_value.json": "/oracle_results/0/value",
+    "evidence_index/path_escape.json": "/files/0/path",
+    "evidence_index/bad_sha.json": "/files/1/sha256",
+    "evidence_index/absolute_path.json": "/files/2/path",
+    "run/bad_started_at.json": "/started_at",
+    "result/bad_finished_at.json": "/timings/finished_at"
+  }
+}

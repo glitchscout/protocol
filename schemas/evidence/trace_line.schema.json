@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/evidence/trace_line.schema.json",
+  "title": "trace_line",
+  "description": "One line of trace.jsonl: what the agent saw, decided and did at one step.",
+  "type": "object",
+  "properties": {
+    "tick": { "type": "integer", "minimum": 0 },
+    "wall_ms": { "type": "number", "minimum": 0, "description": "Wall time since the attempt started." },
+    "observation_digest": { "type": "string", "minLength": 1 },
+    "decision": { "type": "string" },
+    "skill": { "type": "string", "minLength": 1 },
+    "actions": { "type": "array", "items": { "type": "object" } },
+    "oracle_results": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "oracle_id": { "type": "string", "minLength": 1 },
+          "value": { "type": ["boolean", "null"], "description": "null when the oracle couldn't be evaluated." }
+        },
+        "required": ["oracle_id", "value"],
+        "additionalProperties": false
+      }
+    },
+    "events": { "type": "array", "items": { "type": "string", "minLength": 1 } }
+  },
+  "required": ["tick", "wall_ms"],
+  "additionalProperties": false
+}
