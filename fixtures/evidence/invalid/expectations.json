@@ -8,6 +8,8 @@
     "trace_line/oracle_value.json": "/oracle_results/0/value",
     "evidence_index/path_escape.json": "/files/0/path",
     "evidence_index/bad_sha.json": "/files/1/sha256",
-    "evidence_index/absolute_path.json": "/files/2/path"
+    "evidence_index/absolute_path.json": "/files/2/path",
+    "run/bad_started_at.json": "/started_at",
+    "result/bad_finished_at.json": "/timings/finished_at"
   }
 }
