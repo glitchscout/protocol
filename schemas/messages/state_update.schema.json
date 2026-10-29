@@ -48,6 +48,12 @@
                 "$ref": "../common.schema.json#/$defs/id"
               }
             },
+            "hazards": {
+              "type": "array",
+              "items": {
+                "$ref": "../common.schema.json#/$defs/id"
+              }
+            },
             "ui_elements": {
               "type": "array",
               "items": {

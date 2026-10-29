@@ -1,0 +1,124 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "00000007-0000-4000-8000-000000000007",
+  "reply_to": "00000004-0000-4000-8000-000000000004",
+  "session": "s-1",
+  "tick_frame": 14052,
+  "ts": 1761264000.25,
+  "payload": {
+    "player": {
+      "position": {
+        "x": 10.5,
+        "y": 0,
+        "z": -4.2
+      },
+      "velocity": {
+        "x": 0,
+        "y": 0,
+        "z": 0
+      },
+      "health": 100,
+      "state_flags": [
+        "is_grounded"
+      ],
+      "max_health": 100
+    },
+    "interactables": [
+      {
+        "id": "door_3",
+        "type": "door",
+        "position": {
+          "x": 12,
+          "y": 0,
+          "z": -1.5
+        },
+        "distance": 1.6,
+        "state": "closed",
+        "enabled": true,
+        "required_action": "interact",
+        "interaction_range": 2.0,
+        "requires": [
+          "keycard_red"
+        ],
+        "affordance": "grab"
+      }
+    ],
+    "camera": {
+      "position": {
+        "x": 8,
+        "y": 3,
+        "z": -8
+      },
+      "yaw": 42.0,
+      "pitch": -15.0,
+      "mode": "third_person"
+    },
+    "threats": [
+      {
+        "id": "red_robot_2",
+        "type": "enemy",
+        "position": {
+          "x": 20,
+          "y": 0,
+          "z": -3
+        },
+        "distance": 9.1,
+        "health": 40,
+        "attack_range": 6.0,
+        "state": "aiming"
+      }
+    ],
+    "ui_elements": [
+      {
+        "id": "main_menu/play",
+        "type": "button",
+        "text": "Play",
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "rect": [
+          540,
+          300,
+          200,
+          48
+        ]
+      }
+    ],
+    "truncated": false,
+    "hazards": [
+      {
+        "id": "spikes_4",
+        "type": "spikes",
+        "position": {
+          "x": 14,
+          "y": 0,
+          "z": 2
+        },
+        "radius": 1.5,
+        "velocity": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "damage": 10
+      },
+      {
+        "id": "arrow_9",
+        "type": "projectile",
+        "position": {
+          "x": 18,
+          "y": 1,
+          "z": -3
+        },
+        "radius": 0.4,
+        "velocity": {
+          "x": -6,
+          "y": 0,
+          "z": 0
+        },
+        "damage": 5
+      }
+    ]
+  }
+}
