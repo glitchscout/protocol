@@ -12,6 +12,8 @@
     "run/bad_started_at.json": "/started_at",
     "result/bad_finished_at.json": "/timings/finished_at",
     "run/strategy_memory_bad_mode.json": "/strategy_memory/mode",
-    "run/strategy_memory_no_snapshot.json": "/strategy_memory"
+    "run/strategy_memory_no_snapshot.json": "/strategy_memory",
+    "run/reflection_bad_cap_hit.json": "/reflection/cap_hit",
+    "run/reflection_negative_skipped.json": "/reflection/skipped"
   }
 }
