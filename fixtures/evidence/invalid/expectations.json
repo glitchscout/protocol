@@ -10,6 +10,8 @@
     "evidence_index/bad_sha.json": "/files/1/sha256",
     "evidence_index/absolute_path.json": "/files/2/path",
     "run/bad_started_at.json": "/started_at",
-    "result/bad_finished_at.json": "/timings/finished_at"
+    "result/bad_finished_at.json": "/timings/finished_at",
+    "run/strategy_memory_bad_mode.json": "/strategy_memory/mode",
+    "run/strategy_memory_no_snapshot.json": "/strategy_memory"
   }
 }

@@ -1,0 +1,13 @@
+{
+  "run_id": "r1",
+  "started_at": "2026-10-27T10:00:00Z",
+  "protocol": "glitchscout/1",
+  "orchestrator_version": "0.3.0",
+  "strategy_memory": {
+    "mode": "write_only",
+    "snapshot": "sha256:9f2c4e8a1b3d5f7092a4c6e8b0d2f4a6c8e0b2d4f6a8c0e2b4d6f8a0c2e4b6d8",
+    "version": 1,
+    "entries": 0
+  },
+  "tests": []
+}
