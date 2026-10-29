@@ -45,6 +45,7 @@
               "interactables",
               "camera",
               "threats",
+              "hazards",
               "ui_elements",
               "entities"
             ]

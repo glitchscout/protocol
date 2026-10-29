@@ -23,6 +23,12 @@
         "$ref": "#/$defs/threat"
       }
     },
+    "hazards": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/hazard"
+      }
+    },
     "ui_elements": {
       "type": "array",
       "items": {
@@ -53,6 +59,11 @@
         "health": {
           "type": "number"
         },
+        "max_health": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "description": "Health at full. Lets the bot work out health / max_health."
+        },
         "state_flags": {
           "type": "array",
           "items": {
@@ -79,6 +90,14 @@
         "type": {
           "type": "string",
           "minLength": 1
+        },
+        "affordance": {
+          "enum": [
+            "interact",
+            "collect",
+            "push"
+          ],
+          "description": "What the bot may do with it: interact (default), collect (a pickup to route through) or push (moved toward a plate, switch or ledge)."
         },
         "position": {
           "$ref": "common.schema.json#/$defs/vec3"
@@ -173,6 +192,39 @@
       "required": [
         "id",
         "position"
+      ],
+      "additionalProperties": false
+    },
+    "hazard": {
+      "type": "object",
+      "description": "A danger to path around: static (spikes, lava) or moving (projectiles, with velocity). radius is in engine units.",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "position": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "radius": {
+          "type": "number",
+          "minimum": 0
+        },
+        "velocity": {
+          "$ref": "common.schema.json#/$defs/vec3"
+        },
+        "damage": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "id",
+        "position",
+        "radius"
       ],
       "additionalProperties": false
     },
