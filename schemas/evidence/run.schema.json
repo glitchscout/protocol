@@ -60,6 +60,38 @@
     "config_hash": {
       "$ref": "#/$defs/sha256_tagged"
     },
+    "strategy_memory": {
+      "type": "object",
+      "description": "The strategy memory the run used: what the agent learned in earlier runs. A gating run uses a pinned read-only snapshot, so its decisions repeat; only exploratory and nightly runs write.",
+      "properties": {
+        "mode": {
+          "enum": [
+            "read_only",
+            "read_write"
+          ]
+        },
+        "snapshot": {
+          "$ref": "#/$defs/sha256_tagged",
+          "description": "Digest of the snapshot the run started from."
+        },
+        "version": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The snapshot's version, which counts up each time it is written."
+        },
+        "entries": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "mode",
+        "snapshot",
+        "version",
+        "entries"
+      ],
+      "additionalProperties": false
+    },
     "tests": {
       "type": "array",
       "description": "Test ids selected for the run, in run order.",
