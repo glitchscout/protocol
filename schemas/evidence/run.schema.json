@@ -92,6 +92,50 @@
       ],
       "additionalProperties": false
     },
+    "reflection": {
+      "type": "object",
+      "description": "The reflection caps in force and what the run spent against them. When a cap is hit the remaining tests continue deterministically and are tagged reflection_unavailable; they are never failed.",
+      "properties": {
+        "per_test_cap": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "per_run_cap": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "per_suite_cap": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Shared by every run of one CI invocation."
+        },
+        "used": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Reflections this run asked the model for."
+        },
+        "skipped": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Reflections refused because a cap was reached."
+        },
+        "cap_hit": {
+          "enum": [
+            "run",
+            "suite"
+          ],
+          "description": "The first run or suite cap that was reached; absent when none was."
+        }
+      },
+      "required": [
+        "per_test_cap",
+        "per_run_cap",
+        "per_suite_cap",
+        "used",
+        "skipped"
+      ],
+      "additionalProperties": false
+    },
     "tests": {
       "type": "array",
       "description": "Test ids selected for the run, in run order.",

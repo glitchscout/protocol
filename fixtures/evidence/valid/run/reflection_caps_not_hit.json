@@ -1,0 +1,8 @@
+{
+  "run_id": "r2",
+  "started_at": "2026-10-27T10:00:00Z",
+  "protocol": "glitchscout/1",
+  "orchestrator_version": "0.3.0",
+  "reflection": {"per_test_cap": 5, "per_run_cap": 25, "per_suite_cap": 100, "used": 3, "skipped": 0},
+  "tests": []
+}
