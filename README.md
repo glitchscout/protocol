@@ -26,7 +26,7 @@ using the endpoint and token it was launched with. Every JSON text frame is an e
 | `COMMAND` | O→E | Setup and debug commands, standard or game-registered |
 | `STATE_CTRL` | O→E | Reset tiers: `RELOAD_SCENE`, `SAVE` / `LOAD` a slot |
 | `QUERY` / `QUERY_REPLY` | O→E / E→O | Navigation paths and samples, raycasts, line of sight, entity search, on-screen checks |
-| `CAPTURE` | O→E | Request a screenshot, answered with binary frames |
+| `CAPTURE` | O→E | Request a screenshot or start a live-view stream, answered with binary frames |
 | `ACK` | both | Success reply for requests without a dedicated reply type |
 | `HEARTBEAT`, `ERROR`, `GOODBYE` | both | Liveness, structured errors, clean shutdown |
 

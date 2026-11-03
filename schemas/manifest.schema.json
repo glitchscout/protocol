@@ -164,6 +164,10 @@
         "screenshots": {
           "type": "boolean"
         },
+        "live_view": {
+          "type": "boolean",
+          "description": "The engine can stream frames: CAPTURE with every_n_ticks. Absent means it can't."
+        },
         "seed": {
           "type": "boolean"
         },
