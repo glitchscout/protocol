@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://glitchscout.com/schemas/v1/messages/capture.schema.json",
   "title": "CAPTURE",
-  "description": "Orchestrator \u2192 engine. Request a screenshot. The engine replies with binary frames (binary-frame-v1) carrying this message's id as request_id, or ERROR frame_too_large.",
+  "description": "Orchestrator \u2192 engine. Request a screenshot. The engine replies with binary frames (binary-frame-v1) carrying this message's id as request_id, or ERROR frame_too_large. With every_n_ticks it starts a live-view stream instead.",
   "type": "object",
   "allOf": [
     {
@@ -34,6 +34,11 @@
         },
         "lossless": {
           "type": "boolean"
+        },
+        "every_n_ticks": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Start a live-view stream: the engine ACKs, then sends a live-view frame (frame_type 2) with this message's id as request_id whenever the game tick reaches a multiple of this value. The stream replaces any earlier one and ends with the session, surviving a resume. Needs supports.live_view."
         }
       },
       "required": [

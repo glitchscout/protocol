@@ -75,6 +75,17 @@ Chunking is the fallback for transports with small send buffers.
 Reassembly reasons: `chunk_index_out_of_range`, `chunk_count_mismatch`, `chunk_mismatch` (header fields
 differ between chunks), `duplicate_chunk`, `assembled_too_large`, `incomplete` (timed out).
 
+## Live view
+
+`CAPTURE` with `every_n_ticks` starts a stream, for engines that declare `supports.live_view`. The
+engine ACKs the request, then sends a live-view frame (`frame_type` 2) each time the game tick reaches
+a multiple of `every_n_ticks`, with the `CAPTURE` id as `request_id` and `tick_frame` set to that tick.
+
+- In step mode the frames for a `STEP` go out before its `ACK`, while the game is held, so capture
+  never changes game timing.
+- A frame that can't be sent is dropped. The reader sees a gap in `tick_frame`, and no test fails.
+- A newer stream replaces the old one. A stream ends with its session and survives a resume.
+
 ## Fixtures
 
 - `fixtures/binary/valid/*.bin`: each with a `.json` holding the decoded header and the payload's SHA-256.
