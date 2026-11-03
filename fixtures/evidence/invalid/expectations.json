@@ -2,6 +2,7 @@
   "fixtures": {
     "run/missing_run_id.json": "",
     "result/bad_status.json": "/status",
+    "result/bad_triage_state.json": "/triage/state",
     "result/bad_step_status.json": "/steps/3/status",
     "result/attempt_zero.json": "/attempt",
     "trace_line/negative_tick.json": "/tick",
