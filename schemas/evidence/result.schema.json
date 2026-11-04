@@ -27,8 +27,48 @@
         "timed_out",
         "budget_exceeded",
         "inconclusive",
-        "skipped"
-      ]
+        "skipped",
+        "known_issue"
+      ],
+      "description": "known_issue: a failure matching a finding that has been triaged as not gating. See triage."
+    },
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "What identifies this failure across runs and builds: the same bug has the same signature."
+    },
+    "triage": {
+      "type": "object",
+      "description": "What the triage decisions say about this failure's signature. Absent for a failure nobody has triaged.",
+      "properties": {
+        "state": {
+          "enum": [
+            "triaged",
+            "filed",
+            "known",
+            "not_a_bug",
+            "wont_fix",
+            "fixed"
+          ]
+        },
+        "issue": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The linked issue."
+        },
+        "regression": {
+          "type": "boolean",
+          "description": "It was fixed, or its issue was closed, and it came back. It gates again."
+        },
+        "expired": {
+          "type": "boolean",
+          "description": "A not_a_bug suppression matched but has expired. It gates again until it's re-reviewed."
+        }
+      },
+      "required": [
+        "state"
+      ],
+      "additionalProperties": false
     },
     "category": {
       "type": "string",
