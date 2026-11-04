@@ -56,6 +56,7 @@ other tools can read it without the orchestrator:
 | `result` | `results/<test_id>/attempt-<n>/result.json` | status, each Gherkin step's status, the deciding oracle, findings, timings, cost |
 | `trace_line` | `trace.jsonl` (one object per line) | per step: tick, observation digest, decision, skill, actions, oracle values, events |
 | `evidence_index` | `evidence_index.json` | every file of the attempt with its type, SHA-256, size and tick range |
+| `shrink_result` | `repro/shrink.json` | what came of reducing a failing attempt: decisions and ticks before and after, replays used, how often it reproduced |
 
 Files are validated against these schemas when they are written. Fixtures are in `fixtures/evidence/`.
 
