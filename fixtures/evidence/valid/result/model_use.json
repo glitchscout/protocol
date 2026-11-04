@@ -1,0 +1,26 @@
+{
+  "test_id": "qa/features/gate.feature:4",
+  "attempt": 1,
+  "status": "passed",
+  "uri": "qa/features/gate.feature",
+  "line": 4,
+  "scenario": "The gate opens",
+  "timings": {
+    "started_at": "2026-11-04T10:01:00Z",
+    "finished_at": "2026-11-04T10:01:16Z",
+    "wall_ms": 16050,
+    "game_ticks": 1240
+  },
+  "cost": {
+    "model_calls": 3,
+    "usd": 0.012,
+    "unpriced_calls": 1
+  },
+  "notes": [
+    {
+      "kind": "reflection_unavailable",
+      "detail": "the run cap of 25 reflections is used up"
+    }
+  ],
+  "steps": []
+}

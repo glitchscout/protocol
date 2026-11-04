@@ -1,0 +1,14 @@
+{
+  "run_id": "20261104T100000.000Z",
+  "started_at": "2026-11-04T10:00:00Z",
+  "protocol": "glitchscout/1",
+  "orchestrator_version": "0.3.0",
+  "tests": [
+    "qa/features/gate.feature:4"
+  ],
+  "models": {
+    "mode": "model",
+    "reason": "the models the config names",
+    "profile": "default"
+  }
+}

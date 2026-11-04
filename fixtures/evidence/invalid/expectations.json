@@ -18,6 +18,9 @@
     "run/strategy_memory_bad_mode.json": "/strategy_memory/mode",
     "run/strategy_memory_no_snapshot.json": "/strategy_memory",
     "run/reflection_bad_cap_hit.json": "/reflection/cap_hit",
-    "run/reflection_negative_skipped.json": "/reflection/skipped"
+    "run/reflection_negative_skipped.json": "/reflection/skipped",
+    "result/negative_unpriced_calls.json": "/cost/unpriced_calls",
+    "result/note_no_kind.json": "/notes/0",
+    "run/models_bad_mode.json": "/models/mode"
   }
 }

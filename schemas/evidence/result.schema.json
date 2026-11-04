@@ -216,6 +216,11 @@
         "usd": {
           "type": "number",
           "minimum": 0
+        },
+        "unpriced_calls": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Calls to a hosted model with no known price, which usd leaves out. A local model costs nothing and isn't counted."
         }
       },
       "required": [
@@ -223,6 +228,26 @@
         "usd"
       ],
       "additionalProperties": false
+    },
+    "notes": {
+      "type": "array",
+      "description": "What the run wants known about how a test ran, which didn't decide its status (e.g. reflection_unavailable).",
+      "items": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9_]*$"
+          },
+          "detail": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "additionalProperties": false
+      }
     }
   },
   "required": [
