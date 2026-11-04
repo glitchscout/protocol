@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/evidence/shrink_result.schema.json",
+  "title": "shrink_result",
+  "description": "repro/shrink.json: what came of reducing a failing attempt to the shortest replay that still fails the same way.",
+  "type": "object",
+  "properties": {
+    "signature": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The failure signature the replays had to keep."
+    },
+    "status": {
+      "description": "complete: no single decision can be removed, and the trace verified. partial: a budget ran out, and this is the best trace that verified. unverified: the smallest trace didn't reproduce every time, so this is the smallest that did, or the original.",
+      "enum": ["complete", "partial", "unverified"]
+    },
+    "original": { "$ref": "#/$defs/trace" },
+    "minimal": { "$ref": "#/$defs/trace" },
+    "probes": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Replays run, including the verification."
+    },
+    "confirm": {
+      "type": "object",
+      "description": "How often the smallest trace found reproduced when it was verified. With status unverified, that trace may not be the one kept.",
+      "properties": {
+        "reproduced": { "type": "integer", "minimum": 0 },
+        "runs": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["reproduced", "runs"],
+      "additionalProperties": false
+    },
+    "model_calls": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Replays reuse recorded decisions, so this is 0 unless something is wrong."
+    },
+    "elapsed_s": {
+      "type": "number",
+      "minimum": 0,
+      "description": "Wall-clock seconds the reduction took."
+    },
+    "probe_errors": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Replays that couldn't run at all. Many of these mean the rate says little about the failure."
+    },
+    "last_probe_error": {
+      "type": "string",
+      "description": "The latest of those errors."
+    }
+  },
+  "required": ["signature", "status", "original", "minimal", "probes", "confirm", "model_calls", "elapsed_s"],
+  "additionalProperties": false,
+  "$defs": {
+    "trace": {
+      "type": "object",
+      "properties": {
+        "decisions": { "type": "integer", "minimum": 0 },
+        "ticks": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Its duration in game ticks: what the recorded decisions took."
+        }
+      },
+      "required": ["decisions", "ticks"],
+      "additionalProperties": false
+    }
+  }
+}

@@ -12,7 +12,7 @@ import (
 )
 
 // evidenceSchemas are the evidence formats of protocol v1 (schemas/evidence/<name>.schema.json).
-var evidenceSchemas = []string{"run", "result", "trace_line", "evidence_index"}
+var evidenceSchemas = []string{"run", "result", "trace_line", "evidence_index", "shrink_result"}
 
 func evidenceExpectations(t *testing.T) map[string]string {
 	t.Helper()

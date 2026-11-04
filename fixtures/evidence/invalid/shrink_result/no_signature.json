@@ -1,0 +1,9 @@
+{
+  "status": "complete",
+  "original": { "decisions": 312, "ticks": 18240 },
+  "minimal": { "decisions": 4, "ticks": 360 },
+  "probes": 57,
+  "confirm": { "reproduced": 5, "runs": 5 },
+  "model_calls": 0,
+  "elapsed_s": 184.5
+}

@@ -1,0 +1,12 @@
+{
+  "signature": "oracle-77ab10c2e4f9",
+  "status": "unverified",
+  "original": { "decisions": 40, "ticks": 2400 },
+  "minimal": { "decisions": 40, "ticks": 2400 },
+  "probes": 12,
+  "confirm": { "reproduced": 3, "runs": 5 },
+  "model_calls": 0,
+  "elapsed_s": 41,
+  "probe_errors": 2,
+  "last_probe_error": "the game didn't complete its handshake"
+}
