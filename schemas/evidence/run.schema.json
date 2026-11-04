@@ -143,6 +143,32 @@
         "type": "string",
         "minLength": 1
       }
+    },
+    "models": {
+      "type": "object",
+      "description": "Whether this run could call models, and why. A run in model mode that made no calls is not a zero-model run.",
+      "properties": {
+        "mode": {
+          "enum": [
+            "model",
+            "none"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "profile": {
+          "type": "string"
+        },
+        "gating": {
+          "type": "boolean",
+          "description": "This run gates: a result that depended on a live model call stays advisory."
+        }
+      },
+      "required": [
+        "mode"
+      ],
+      "additionalProperties": false
     }
   },
   "required": [
