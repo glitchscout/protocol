@@ -159,6 +159,10 @@
         },
         "profile": {
           "type": "string"
+        },
+        "gating": {
+          "type": "boolean",
+          "description": "This run gates: a result that depended on a live model call stays advisory."
         }
       },
       "required": [

@@ -9,6 +9,7 @@
   "models": {
     "mode": "model",
     "reason": "the models the config names",
-    "profile": "default"
+    "profile": "default",
+    "gating": true
   }
 }
