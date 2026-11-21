@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://glitchscout.com/schemas/v1/messages/error.schema.json",
   "title": "ERROR",
-  "description": "Either direction. Structured error, usually a reply to the failed request.",
+  "description": "Either direction. Structured error, usually a reply to the failed request. Code illegal_action answers a CHOOSE the engine won't perform, with details naming the action and why: unknown_action (not in the current legal_actions), bad_target (missing, or not one of the entry's targets) or refused (listed, but the game rejects it now).",
   "type": "object",
   "allOf": [
     {
@@ -40,6 +40,51 @@
         "code",
         "message",
         "retryable"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "code": {
+            "const": "illegal_action"
+          }
+        },
+        "required": [
+          "code"
+        ]
+      },
+      "then": {
+        "required": [
+          "details"
+        ],
+        "properties": {
+          "details": {
+            "$ref": "#/$defs/illegal_action_details"
+          }
+        }
+      }
+    },
+    "illegal_action_details": {
+      "type": "object",
+      "properties": {
+        "action_id": {
+          "type": "string",
+          "description": "The action_id the CHOOSE named."
+        },
+        "target": {
+          "type": "string",
+          "description": "The target the CHOOSE named, if any."
+        },
+        "reason": {
+          "enum": [
+            "unknown_action",
+            "bad_target",
+            "refused"
+          ]
+        }
+      },
+      "required": [
+        "action_id",
+        "reason"
       ],
       "additionalProperties": false
     }

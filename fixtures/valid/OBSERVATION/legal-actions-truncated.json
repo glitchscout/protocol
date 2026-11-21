@@ -1,0 +1,37 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "00000063-0000-4000-8000-000000000063",
+  "reply_to": "00000060-0000-4000-8000-000000000060",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "legal_actions": [
+      {
+        "id": "card-7",
+        "kind": "card",
+        "label": "Strike",
+        "targets": [
+          "slime_1",
+          "slime_2"
+        ],
+        "cost": {
+          "energy": 1
+        },
+        "group": "hand",
+        "source": "provider"
+      },
+      {
+        "id": "card-8",
+        "kind": "card",
+        "label": "Defend",
+        "cost": {
+          "energy": 1
+        },
+        "group": "hand"
+      }
+    ],
+    "truncated": true
+  }
+}

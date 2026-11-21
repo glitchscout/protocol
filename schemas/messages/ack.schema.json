@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://glitchscout.com/schemas/v1/messages/ack.schema.json",
   "title": "ACK",
-  "description": "Either direction. Success reply to a request that has no dedicated reply type (ACTION_INJECT, UI_ACTION, STEP, COMMAND, STATE_CTRL, CAPTURE). Failures get ERROR.",
+  "description": "Either direction. Success reply to a request that has no dedicated reply type (ACTION_INJECT, UI_ACTION, CHOOSE, STEP, COMMAND, STATE_CTRL, CAPTURE). Failures get ERROR.",
   "type": "object",
   "allOf": [
     {

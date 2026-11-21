@@ -1,0 +1,17 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "ERROR",
+  "id": "0000007f-0000-4000-8000-00000000007f",
+  "reply_to": "00000064-0000-4000-8000-000000000064",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "code": "illegal_action",
+    "message": "no",
+    "retryable": false,
+    "details": {
+      "reason": "refused"
+    }
+  }
+}
