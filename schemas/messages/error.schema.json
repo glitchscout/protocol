@@ -67,11 +67,11 @@
       "type": "object",
       "properties": {
         "action_id": {
-          "type": "string",
+          "$ref": "../common.schema.json#/$defs/id",
           "description": "The action_id the CHOOSE named."
         },
         "target": {
-          "type": "string",
+          "$ref": "../common.schema.json#/$defs/id",
           "description": "The target the CHOOSE named, if any."
         },
         "reason": {

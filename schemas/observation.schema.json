@@ -43,7 +43,7 @@
     },
     "legal_actions": {
       "type": "array",
-      "description": "The discrete moves the game would accept right now, in the game's order; perform one with CHOOSE. Ids are unique within the list. Sent only by engines whose manifest has supports.legal_actions.",
+      "description": "The discrete moves the game would accept right now, in the game's order; perform one with CHOOSE. Ids are unique within the list. Sent only by engines whose manifest has supports.legal_actions. Never diffed: a STATE_UPDATE delta carries the whole list whenever it changed (an empty list when no move is legal) and leaves it out when it didn't.",
       "items": {
         "$ref": "#/$defs/legal_action"
       }

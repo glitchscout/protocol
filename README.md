@@ -43,7 +43,8 @@ moves they would accept right now in an observation's `legal_actions` section, a
 list was built from visible UI controls). The orchestrator performs one with
 `CHOOSE {action_id, target?, args?}`, answered by `ACK`, or by `ERROR` with code `illegal_action` and
 `details.reason`: `unknown_action` (the id isn't in the current list, e.g. a card already played),
-`bad_target` (missing, or not one of the entry's `targets`) or `refused` (listed, but the game rejects it now).
+`bad_target` (missing, or not one of the entry's `targets`) or `refused` (listed, but the game rejects it now). A `STATE_UPDATE` delta never diffs
+the list: it carries the whole list whenever it changed (`[]` when no move is legal) and leaves it out when it didn't.
 
 **Size limits.** JSON text frames are capped at 256 KB by default (`manifest.limits.max_text_frame_bytes`).
 `OBSERVE` takes `radius`, `entity_types`, `max_n` (nearest first; for `legal_actions`, the first n in the
