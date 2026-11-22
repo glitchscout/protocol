@@ -20,6 +20,7 @@
         "EVENT",
         "ACTION_INJECT",
         "UI_ACTION",
+        "CHOOSE",
         "STEP",
         "COMMAND",
         "STATE_CTRL",

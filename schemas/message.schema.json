@@ -29,6 +29,9 @@
       "$ref": "messages/ui_action.schema.json"
     },
     {
+      "$ref": "messages/choose.schema.json"
+    },
+    {
       "$ref": "messages/step.schema.json"
     },
     {

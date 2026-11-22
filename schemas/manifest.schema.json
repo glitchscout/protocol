@@ -176,6 +176,10 @@
         },
         "god_mode": {
           "type": "boolean"
+        },
+        "legal_actions": {
+          "type": "boolean",
+          "description": "The game lists its legal moves (observation legal_actions) and performs them with CHOOSE. Absent means it doesn't."
         }
       },
       "required": [

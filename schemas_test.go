@@ -19,7 +19,7 @@ const metaSchemaURL = "https://json-schema.org/draft/2020-12/schema"
 // messageTypes is every message type in protocol v1.
 var messageTypes = []string{
 	"HELLO", "HELLO_ACK", "OBSERVE", "OBSERVATION", "STATE_UPDATE", "EVENT", "ACTION_INJECT",
-	"UI_ACTION", "STEP", "COMMAND", "STATE_CTRL", "QUERY", "QUERY_REPLY", "CAPTURE", "ACK",
+	"UI_ACTION", "CHOOSE", "STEP", "COMMAND", "STATE_CTRL", "QUERY", "QUERY_REPLY", "CAPTURE", "ACK",
 	"HEARTBEAT", "ERROR", "GOODBYE",
 }
 

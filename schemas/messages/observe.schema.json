@@ -35,7 +35,8 @@
         },
         "max_n": {
           "type": "integer",
-          "minimum": 0
+          "minimum": 0,
+          "description": "Most entries per entity array and in legal_actions."
         },
         "sections": {
           "type": "array",
@@ -47,7 +48,8 @@
               "threats",
               "hazards",
               "ui_elements",
-              "entities"
+              "entities",
+              "legal_actions"
             ]
           },
           "uniqueItems": true

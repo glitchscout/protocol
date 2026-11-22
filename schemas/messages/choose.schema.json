@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://glitchscout.com/schemas/v1/messages/choose.schema.json",
+  "title": "CHOOSE",
+  "description": "Orchestrator → engine. Perform one entry of the observation's legal_actions, by id. Answered by ACK, or by ERROR with code illegal_action when the id isn't in the current list, the target isn't one of the entry's targets, or the game refuses the move. Only sent to engines whose manifest has supports.legal_actions.",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "../envelope.schema.json"
+    }
+  ],
+  "properties": {
+    "message_type": {
+      "type": "string",
+      "const": "CHOOSE"
+    },
+    "payload": {
+      "$ref": "#/$defs/payload"
+    }
+  },
+  "$defs": {
+    "payload": {
+      "type": "object",
+      "properties": {
+        "action_id": {
+          "$ref": "../common.schema.json#/$defs/id",
+          "description": "The id of a legal_actions entry in the latest observation."
+        },
+        "target": {
+          "$ref": "../common.schema.json#/$defs/id",
+          "description": "One of the entry's targets (an entity id). Required when the entry lists targets."
+        },
+        "args": {
+          "type": "object",
+          "description": "Game-defined arguments for a custom action."
+        }
+      },
+      "required": [
+        "action_id"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

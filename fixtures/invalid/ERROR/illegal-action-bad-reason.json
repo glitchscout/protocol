@@ -1,0 +1,18 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "ERROR",
+  "id": "0000007e-0000-4000-8000-00000000007e",
+  "reply_to": "00000064-0000-4000-8000-000000000064",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "code": "illegal_action",
+    "message": "card-7 can't target slime_9",
+    "retryable": false,
+    "details": {
+      "action_id": "card-7",
+      "reason": "too_expensive"
+    }
+  }
+}

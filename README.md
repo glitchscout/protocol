@@ -22,6 +22,7 @@ using the endpoint and token it was launched with. Every JSON text frame is an e
 | `EVENT` | E→O | Game events, log lines, script errors |
 | `ACTION_INJECT` | O→E | Semantic input by input-action name: buttons and analog axes |
 | `UI_ACTION` | O→E | Focus, click, set a value on, or submit a UI element |
+| `CHOOSE` | O→E | Perform one of the observation's `legal_actions` by id (with a `target` when the entry lists targets) |
 | `STEP` | O→E | Advance N fixed ticks in step mode |
 | `COMMAND` | O→E | Setup and debug commands, standard or game-registered |
 | `STATE_CTRL` | O→E | Reset tiers: `RELOAD_SCENE`, `SAVE` / `LOAD` a slot |
@@ -34,9 +35,21 @@ Each message type has a schema in [schemas/messages/](schemas/messages/), and
 [schemas/message.schema.json](schemas/message.schema.json) validates any message. Payloads are
 strict: unknown fields are rejected.
 
+**Legal actions.** Games with discrete decisions (card games, visual novels, turn-based games) can list the
+moves they would accept right now in an observation's `legal_actions` section, and set
+`manifest.supports.legal_actions: true`. Each entry has a stable `id`, a `kind` (`card`, `choice`, `move`,
+`buy`, `end_turn`, `ui` or `custom`) and a `label`, and optionally `targets` (entity ids), `cost`
+(resource → amount), `group` (e.g. `hand`, `shop`) and `source` (`provider`, the default, or `ui` when the
+list was built from visible UI controls). The orchestrator performs one with
+`CHOOSE {action_id, target?, args?}`, answered by `ACK`, or by `ERROR` with code `illegal_action` and
+`details.reason`: `unknown_action` (the id isn't in the current list, e.g. a card already played),
+`bad_target` (missing, or not one of the entry's `targets`) or `refused` (listed, but the game rejects it now). A `STATE_UPDATE` delta never diffs
+the list: it carries the whole list whenever it changed (`[]` when no move is legal) and leaves it out when it didn't.
+
 **Size limits.** JSON text frames are capped at 256 KB by default (`manifest.limits.max_text_frame_bytes`).
-`OBSERVE` takes `radius`, `entity_types`, `max_n` (nearest first) and `sections` filters. An observation
-that would still exceed the cap is truncated by distance and flagged `truncated: true`. Binary frames
+`OBSERVE` takes `radius`, `entity_types`, `max_n` (nearest first; for `legal_actions`, the first n in the
+game's order) and `sections` filters. An observation that would still exceed the cap is truncated (entities
+by distance, `legal_actions` from the end) and flagged `truncated: true`. Binary frames
 are capped at 4 MB (`max_binary_frame_bytes`).
 
 ## Binary frames

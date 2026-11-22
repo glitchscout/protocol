@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://glitchscout.com/schemas/v1/observation.schema.json",
   "title": "Observation",
-  "description": "Game state snapshot. Every section is optional; the SDK sends the sections OBSERVE asked for. Interest management: entity arrays are sorted by distance and cut to OBSERVE.max_n, and an observation that would exceed the text-frame cap (manifest limits.max_text_frame_bytes, default 262144) is truncated by distance and flagged truncated: true.",
+  "description": "Game state snapshot. Every section is optional; the SDK sends the sections OBSERVE asked for. Interest management: entity arrays are sorted by distance and cut to OBSERVE.max_n, legal_actions keeps the game's order and is cut to max_n too, and an observation that would exceed the text-frame cap (manifest limits.max_text_frame_bytes, default 262144) is truncated (entities by distance, legal_actions from the end) and flagged truncated: true.",
   "type": "object",
   "properties": {
     "player": {
@@ -41,9 +41,16 @@
         "$ref": "common.schema.json#/$defs/entity"
       }
     },
+    "legal_actions": {
+      "type": "array",
+      "description": "The discrete moves the game would accept right now, in the game's order; perform one with CHOOSE. Ids are unique within the list. Sent only by engines whose manifest has supports.legal_actions. Never diffed: a STATE_UPDATE delta carries the whole list whenever it changed (an empty list when no move is legal) and leaves it out when it didn't.",
+      "items": {
+        "$ref": "#/$defs/legal_action"
+      }
+    },
     "truncated": {
       "type": "boolean",
-      "description": "True when entities were dropped to fit the text-frame cap."
+      "description": "True when entities or legal actions were dropped to fit the text-frame cap."
     }
   },
   "$defs": {
@@ -267,6 +274,66 @@
         "type",
         "enabled",
         "visible"
+      ],
+      "additionalProperties": false
+    },
+    "legal_action": {
+      "type": "object",
+      "description": "One move the game would accept now.",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/id",
+          "description": "Stable while the move stays legal; CHOOSE names it."
+        },
+        "kind": {
+          "enum": [
+            "card",
+            "choice",
+            "move",
+            "buy",
+            "end_turn",
+            "ui",
+            "custom"
+          ]
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1,
+          "description": "What a player sees, e.g. the card's name or the dialogue line."
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          },
+          "uniqueItems": true,
+          "description": "Entity ids the move can be aimed at. When present, CHOOSE must name one of them."
+        },
+        "cost": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number"
+          },
+          "description": "Resource name \u2192 amount the move spends, e.g. {\"energy\": 1}."
+        },
+        "group": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Where the move comes from, e.g. hand or shop."
+        },
+        "source": {
+          "enum": [
+            "provider",
+            "ui"
+          ],
+          "default": "provider",
+          "description": "provider: listed by the game's legal-actions provider; ui: built from enabled visible UI controls."
+        }
+      },
+      "required": [
+        "id",
+        "kind",
+        "label"
       ],
       "additionalProperties": false
     }

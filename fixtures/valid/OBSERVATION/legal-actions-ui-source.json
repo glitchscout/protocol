@@ -1,0 +1,44 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "00000062-0000-4000-8000-000000000062",
+  "reply_to": "00000060-0000-4000-8000-000000000060",
+  "session": "s-1",
+  "tick_frame": 100,
+  "ts": 1761264000.25,
+  "payload": {
+    "legal_actions": [
+      {
+        "id": "choice-1",
+        "kind": "choice",
+        "label": "Open the letter",
+        "group": "dialogue"
+      },
+      {
+        "id": "choice-2",
+        "kind": "choice",
+        "label": "Leave it on the desk",
+        "group": "dialogue"
+      },
+      {
+        "id": "ui:menu/save",
+        "kind": "ui",
+        "label": "Save",
+        "source": "ui"
+      },
+      {
+        "id": "skip-scene",
+        "kind": "custom",
+        "label": "Skip scene"
+      },
+      {
+        "id": "move-e2-e4",
+        "kind": "move",
+        "label": "e2 to e4",
+        "targets": [
+          "square_e4"
+        ]
+      }
+    ]
+  }
+}
