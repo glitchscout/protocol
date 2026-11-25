@@ -73,12 +73,22 @@ An observation's `ui_elements` describe the game's UI the same way in every engi
 - **Text.** A `button` or `checkbox` reports its caption as its own `text`, also when the engine keeps it in a
   child text widget; that child isn't reported as a separate element. An `option`'s `text` is its selected
   option, not its caption.
+- **Labels.** A slider, text field or dropdown has no stable text of its own: its `text` is what's typed or
+  selected, and a slider has none. Its optional `label` is the name a player reads for it, usually a caption
+  beside it ("Volume", "Player name", "Quality"), and it doesn't change as the control is used. A `button` or
+  `checkbox` usually has no `label`; its `text` names it. Where an SDK takes a label from is up to the engine:
+  an explicit name the game sets, the engine's accessibility name, a text field's placeholder, or the text just
+  before the control in its layout.
+- **Dropdown lists.** A dropdown's open list of options isn't reported as elements; a test picks an option with
+  `set_value`.
 - **Hidden controls.** A hidden or inactive control may be reported with `visible: false` or left out; the two mean
   the same.
 - **Rectangles.** `rect` is `[x, y, width, height]` in pixels from the top-left of the screen, y downward. An engine
   whose UI is laid out from the bottom-left (Unity uGUI) converts.
 
 [fixtures/valid/OBSERVATION/ui-types.json](fixtures/valid/OBSERVATION/ui-types.json) has one element of each type.
+[fixtures/valid/OBSERVATION/ui-labels.json](fixtures/valid/OBSERVATION/ui-labels.json) has a labelled slider,
+text field and dropdown.
 
 ## Binary frames
 
@@ -134,6 +144,10 @@ go run ./cmd/compatcheck -base <checkout of main> -head .
 ```
 
 A breaking change needs a new protocol version (`glitchscout/2`).
+
+An optional field added within a version (such as `ui_element.label`) changes nothing for an SDK that doesn't
+send it. Most objects reject properties they don't list, though, so a receiver built before the field rejects a
+message that carries it: release the receiver's support first, then the sender's.
 
 ## Checks
 

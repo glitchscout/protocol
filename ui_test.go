@@ -79,3 +79,37 @@ func TestAValidFixtureHasEveryUIType(t *testing.T) {
 		}
 	}
 }
+
+// A valid fixture gives a slider, a text field and a dropdown the label a player reads beside them, apart from their
+// text and value, and gives a label element none.
+func TestAValidFixtureLabelsItsSliderFieldAndDropdown(t *testing.T) {
+	var msg struct {
+		Payload struct {
+			UIElements []struct {
+				Type  string  `json:"type"`
+				Label *string `json:"label"`
+			} `json:"ui_elements"`
+		} `json:"payload"`
+	}
+	b, err := FS.ReadFile("fixtures/valid/OBSERVATION/ui-labels.json")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := json.Unmarshal(b, &msg); err != nil {
+		t.Fatal(err)
+	}
+	labelled := map[string]bool{}
+	for _, e := range msg.Payload.UIElements {
+		if e.Label != nil {
+			labelled[e.Type] = true
+		}
+	}
+	for _, typ := range []string{UISlider, UITextInput, UIOption} {
+		if !labelled[typ] {
+			t.Errorf("ui-labels.json has no labelled %q", typ)
+		}
+	}
+	if labelled[UILabel] {
+		t.Error("ui-labels.json gives a label element a label")
+	}
+}
