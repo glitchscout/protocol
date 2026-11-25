@@ -243,16 +243,28 @@
         },
         "type": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "description": "What kind of control it is, one of the standard types: button (pressed to do something: a button, a menu entry, a link), checkbox (toggled on and off), option (a dropdown), slider (a number in a range, spin boxes included), text_input (a text field), label (text a player reads but can't operate), or control (any other control the game marks, such as a tab). Report the standard type, not the engine's class name (button, not Button or UButton).",
+          "examples": [
+            "button",
+            "checkbox",
+            "option",
+            "slider",
+            "text_input",
+            "label",
+            "control"
+          ]
         },
         "text": {
-          "type": "string"
+          "type": "string",
+          "description": "The text a player reads on it. A button or checkbox reports its caption here even when the engine keeps it in a child text widget, and that child isn't reported as an element of its own. An option's text is its selected option, not its caption."
         },
         "enabled": {
           "type": "boolean"
         },
         "visible": {
-          "type": "boolean"
+          "type": "boolean",
+          "description": "Whether it is on screen. An SDK may report a hidden or inactive control with visible false or leave it out; the two mean the same."
         },
         "focused": {
           "type": "boolean"
@@ -266,7 +278,8 @@
             "number",
             "boolean",
             "null"
-          ]
+          ],
+          "description": "The control's current value: a slider's number, a checkbox's boolean, a text_input's text, an option's selected option. Absent or null for buttons, labels and controls."
         }
       },
       "required": [
@@ -275,7 +288,8 @@
         "enabled",
         "visible"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "description": "One control or piece of text in the game's UI. Every SDK reports the same thing for the same kind of control, so a locator means the same in every engine."
     },
     "legal_action": {
       "type": "object",

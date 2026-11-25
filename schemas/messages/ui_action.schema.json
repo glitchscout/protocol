@@ -38,7 +38,8 @@
             "string",
             "number",
             "boolean"
-          ]
+          ],
+          "description": "set_value only. What each type takes: slider a number (not a numeric string); checkbox a boolean, or the string \"true\" or \"false\"; option the option's text or its 0-based index; text_input a string. The SDK answers a value the control can't take, or set_value on a type that takes none, with ERROR invalid_args."
         }
       },
       "required": [

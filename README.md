@@ -52,6 +52,34 @@ game's order) and `sections` filters. An observation that would still exceed the
 by distance, `legal_actions` from the end) and flagged `truncated: true`. Binary frames
 are capped at 4 MB (`max_binary_frame_bytes`).
 
+## UI elements
+
+An observation's `ui_elements` describe the game's UI the same way in every engine, so a test that says
+`type=button text='Play'` finds the same control in a Godot, Unity or Unreal build. An SDK follows these rules:
+
+- **Types.** `type` is one of the standard types (`protocol.UITypes` in Go), never the engine's class name:
+
+  | Type | What it is | `value` | `set_value` takes |
+  |---|---|---|---|
+  | `button` | pressed to do something: a button, a menu entry, a link | none | nothing |
+  | `checkbox` | toggled on and off | boolean | a boolean, or `"true"` / `"false"` |
+  | `option` | a dropdown | the selected option's text | the option's text or its 0-based index |
+  | `slider` | a number in a range, spin boxes included | number | a number (not `"0.5"`) |
+  | `text_input` | a single- or multi-line text field | its text | a string |
+  | `label` | text a player reads but can't operate | none | nothing |
+  | `control` | any other control the game marks, such as a tab | none | nothing |
+
+  A `set_value` the control can't take is answered with `ERROR` code `invalid_args`.
+- **Text.** A `button` or `checkbox` reports its caption as its own `text`, also when the engine keeps it in a
+  child text widget; that child isn't reported as a separate element. An `option`'s `text` is its selected
+  option, not its caption.
+- **Hidden controls.** A hidden or inactive control may be reported with `visible: false` or left out; the two mean
+  the same.
+- **Rectangles.** `rect` is `[x, y, width, height]` in pixels from the top-left of the screen, y downward. An engine
+  whose UI is laid out from the bottom-left (Unity uGUI) converts.
+
+[fixtures/valid/OBSERVATION/ui-types.json](fixtures/valid/OBSERVATION/ui-types.json) has one element of each type.
+
 ## Binary frames
 
 Screenshots and live-view frames are WebSocket binary messages: a 64-byte little-endian header plus
@@ -90,6 +118,9 @@ b, err := protocol.FS.ReadFile("schemas/messages/step.schema.json")
 
 Schema `$id`s live under `https://glitchscout.com/schemas/v1/`; resolve them from `protocol.FS`
 rather than over the network.
+
+`protocol.UITypes` lists the standard UI element types, with a constant for each (`protocol.UIButton`, …)
+and `protocol.UIInteractiveTypes` for the ones a player operates.
 
 `protocol.Compiler(protocol.FS)` returns a `santhosh-tekuri/jsonschema` compiler with every schema registered.
 
