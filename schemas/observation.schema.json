@@ -259,6 +259,10 @@
           "type": "string",
           "description": "The text a player reads on it. A button or checkbox reports its caption here even when the engine keeps it in a child text widget, and that child isn't reported as an element of its own. An option's text is its selected option, not its caption."
         },
+        "label": {
+          "type": "string",
+          "description": "The name a player reads for the control, apart from what it shows (text) and holds (value): the caption beside a slider, a text field or a dropdown, such as Volume or Player name. It stays the same while the control is used. A button or checkbox usually has none, because its text names it."
+        },
         "enabled": {
           "type": "boolean"
         },

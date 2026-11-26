@@ -1,0 +1,67 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "0000000d-0000-4000-8000-00000000000d",
+  "reply_to": "00000006-0000-4000-8000-000000000006",
+  "session": "s-1",
+  "tick_frame": 13,
+  "ts": 1761264000.5,
+  "payload": {
+    "ui_elements": [
+      {
+        "id": "options/volume_caption",
+        "type": "label",
+        "text": "Volume",
+        "enabled": true,
+        "visible": true,
+        "rect": [240, 300, 180, 32]
+      },
+      {
+        "id": "options/volume",
+        "type": "slider",
+        "label": "Volume",
+        "enabled": true,
+        "visible": true,
+        "rect": [440, 300, 400, 32],
+        "value": 0.8
+      },
+      {
+        "id": "options/name",
+        "type": "text_input",
+        "text": "",
+        "label": "Player name",
+        "enabled": true,
+        "visible": true,
+        "rect": [440, 350, 400, 32],
+        "value": ""
+      },
+      {
+        "id": "options/quality_caption",
+        "type": "label",
+        "text": "Quality",
+        "enabled": true,
+        "visible": true,
+        "rect": [240, 400, 180, 32]
+      },
+      {
+        "id": "options/quality",
+        "type": "option",
+        "text": "High",
+        "label": "Quality",
+        "enabled": true,
+        "visible": true,
+        "rect": [440, 400, 400, 32],
+        "value": "High"
+      },
+      {
+        "id": "options/back",
+        "type": "button",
+        "text": "Back",
+        "enabled": true,
+        "visible": true,
+        "focused": true,
+        "rect": [540, 600, 200, 48]
+      }
+    ]
+  }
+}
