@@ -15,7 +15,7 @@
     {"keyword": "Then", "text": "\"gate_north\" should be \"closed\" within 10 seconds", "line": 20, "status": "failed", "duration_ms": 10000, "error": "not met within 10s: entity('gate_north').state was 'open'", "attachments": ["screenshots/fail-20.png"]},
     {"keyword": "And", "text": "no script errors should be logged", "line": 21, "status": "skipped"}
   ],
-  "failure": {"oracle_id": "success/0", "role": "success", "reason": "not met within 10s", "step": "\"gate_north\" should be \"closed\" within 10 seconds", "line": 20, "tick": 1240},
+  "failure": {"oracle_id": "success/0", "role": "success", "reason": "not met within 10s", "step": "\"gate_north\" should be \"closed\" within 10 seconds", "line": 20, "tick": 1240, "kind": "check_failed"},
   "findings": [{"oracle": "ui_overlap", "subject": "ok+cancel", "tick": 300, "detail": "[10 10 100 30] and [50 20 100 30] overlap"}],
   "timings": {"started_at": "2026-10-27T10:01:00Z", "finished_at": "2026-10-27T10:01:16Z", "wall_ms": 16050, "game_ticks": 1240}
 }

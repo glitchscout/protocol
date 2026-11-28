@@ -141,6 +141,36 @@
         "tick": {
           "type": "integer",
           "minimum": 0
+        },
+        "kind": {
+          "description": "What kind of failure it was. Game failures are possible bugs: check_failed (a Then or invariant didn't hold), ui_no_effect, crashed, hung, softlock, script_error, finding (another zero-config oracle). Test failures say the test needs attention: locator_not_found, locator_ambiguous, locator_syntax, target_not_actionable (hidden or disabled for the whole wait), wait_timeout, setup_blocked, agent_failure. harness and budget are neither: the run couldn't reach a verdict. Absent in results written before kinds.",
+          "enum": [
+            "check_failed",
+            "ui_no_effect",
+            "crashed",
+            "hung",
+            "softlock",
+            "script_error",
+            "finding",
+            "locator_not_found",
+            "locator_ambiguous",
+            "locator_syntax",
+            "target_not_actionable",
+            "wait_timeout",
+            "setup_blocked",
+            "agent_failure",
+            "harness",
+            "budget"
+          ]
+        },
+        "candidates": {
+          "type": "array",
+          "description": "For a test failure on a target: what was there when the step failed, each as a locator that finds it, closest first.",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "maxItems": 20
         }
       },
       "required": [
