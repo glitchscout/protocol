@@ -49,7 +49,8 @@
               "hazards",
               "ui_elements",
               "entities",
-              "legal_actions"
+              "legal_actions",
+              "state_flags"
             ]
           },
           "uniqueItems": true

@@ -48,6 +48,15 @@
         "$ref": "#/$defs/legal_action"
       }
     },
+    "state_flags": {
+      "type": "array",
+      "description": "What the game itself is doing that holds the player, whether or not the scene has a player: a menu's intro dialogue, a loading screen. The standard holds are in_dialogue, cutscene, loading and paused; a game may add its own flags. A STATE_UPDATE delta never diffs the list: it carries the whole list whenever it changed ([] when no flag is set) and leaves it out when it didn't.",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      },
+      "uniqueItems": true
+    },
     "truncated": {
       "type": "boolean",
       "description": "True when entities or legal actions were dropped to fit the text-frame cap."
@@ -75,7 +84,8 @@
           "type": "array",
           "items": {
             "type": "string"
-          }
+          },
+          "description": "The player's own state (is_grounded, in_dialogue, ...). A hold the game reports whether or not there is a player goes in the observation's state_flags; an orchestrator reads both."
         },
         "scene": {
           "type": "string",

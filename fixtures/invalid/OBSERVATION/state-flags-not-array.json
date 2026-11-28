@@ -1,0 +1,12 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "OBSERVATION",
+  "id": "00000093-0000-4000-8000-000000000093",
+  "reply_to": "00000089-0000-4000-8000-000000000089",
+  "session": "s-1",
+  "tick_frame": 3,
+  "ts": 1761264000.25,
+  "payload": {
+    "state_flags": "in_dialogue"
+  }
+}

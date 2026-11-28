@@ -1,0 +1,13 @@
+{
+  "protocol": "glitchscout/1",
+  "message_type": "STATE_UPDATE",
+  "id": "00000092-0000-4000-8000-000000000092",
+  "reply_to": null,
+  "session": "s-1",
+  "tick_frame": 14054,
+  "ts": 1761264000.25,
+  "payload": {
+    "mode": "delta",
+    "state_flags": []
+  }
+}

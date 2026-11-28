@@ -46,6 +46,14 @@ list was built from visible UI controls). The orchestrator performs one with
 `bad_target` (missing, or not one of the entry's `targets`) or `refused` (listed, but the game rejects it now). A `STATE_UPDATE` delta never diffs
 the list: it carries the whole list whenever it changed (`[]` when no move is legal) and leaves it out when it didn't.
 
+**State flags.** An observation's `state_flags` say what the game itself is doing that holds the player,
+whether or not the scene has a player: an intro dialogue over the main menu, a loading screen. The standard
+holds are `in_dialogue`, `cutscene`, `loading` and `paused`, and a game may add its own flags. A scene with a
+player can keep reporting them on `player.state_flags` too: an orchestrator reads both, so it can tell the game is
+holding the player and wait for the hold, or advance a dialogue, before it acts. Like `legal_actions`, a
+`STATE_UPDATE` delta carries the whole list whenever it changed (`[]` when no flag is set) and leaves it out when
+it didn't.
+
 **Size limits.** JSON text frames are capped at 256 KB by default (`manifest.limits.max_text_frame_bytes`).
 `OBSERVE` takes `radius`, `entity_types`, `max_n` (nearest first; for `legal_actions`, the first n in the
 game's order) and `sections` filters. An observation that would still exceed the cap is truncated (entities
