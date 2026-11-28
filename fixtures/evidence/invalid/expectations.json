@@ -21,6 +21,8 @@
     "run/reflection_negative_skipped.json": "/reflection/skipped",
     "result/negative_unpriced_calls.json": "/cost/unpriced_calls",
     "result/note_no_kind.json": "/notes/0",
-    "run/models_bad_mode.json": "/models/mode"
+    "run/models_bad_mode.json": "/models/mode",
+    "result/bad_failure_kind.json": "/failure/kind",
+    "result/empty_candidate.json": "/failure/candidates/0"
   }
 }

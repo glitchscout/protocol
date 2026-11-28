@@ -1,0 +1,52 @@
+{
+  "test_id": "qa/features/intro.feature:17:25",
+  "attempt": 2,
+  "status": "agent_failure",
+  "confidence": 0.9,
+  "plan_hash": "sha256:5b1d0e7c9a2f4e6b8d0c2a4f6e8b0d2c4a6f8e0b2d4c6a8f0e2b4d6c8a0f2e4b",
+  "uri": "qa/features/intro.feature",
+  "line": 17,
+  "feature": "First NPC conversation",
+  "scenario": "The north gate only opens with every key",
+  "steps": [
+    {
+      "keyword": "Given",
+      "text": "the player is in scene \"title\"",
+      "line": 18,
+      "status": "passed",
+      "duration_ms": 30
+    },
+    {
+      "keyword": "When",
+      "text": "the player chooses \"type=button text='Setings'\"",
+      "line": 19,
+      "status": "failed",
+      "duration_ms": 5000,
+      "error": "locator \"type=button text='Setings'\" matches nothing"
+    },
+    {
+      "keyword": "Then",
+      "text": "\"type=slider label='Volume'\" should be visible",
+      "line": 20,
+      "status": "skipped"
+    }
+  ],
+  "failure": {
+    "oracle_id": "action",
+    "role": "process",
+    "reason": "locator \"type=button text='Setings'\" matches nothing",
+    "step": "the player chooses \"type=button text='Setings'\"",
+    "line": 19,
+    "tick": 300,
+    "kind": "locator_not_found",
+    "candidates": [
+      ""
+    ]
+  },
+  "timings": {
+    "started_at": "2026-10-27T10:01:00Z",
+    "finished_at": "2026-10-27T10:01:16Z",
+    "wall_ms": 16050,
+    "game_ticks": 1240
+  }
+}
